@@ -16,14 +16,14 @@ class Label(Widget):
         self._draw_label()
 
     def _draw_label(self):
-        bg_color = (210, 210, 210)
+        bg_color = (255, 255, 255, 0)
 
         pos = self.rect.topleft
         self._text_img = self._font.render(self._text, True, self._text_color)
 
         self._text_rect = self._text_img.get_rect()
-        size = self._font.get_height()
-        self.rect = self._text_rect.inflate(size, size)
+        padding = self._font.get_height()
+        self.rect = self._text_rect.inflate(padding, padding)
         rect_center = (self.rect.w // 2, self.rect.h // 2)
         self._text_rect.center = rect_center
 

@@ -29,8 +29,8 @@ class StandardButton(Button):
         self._text_img = self._font.render(self._text, True, text_color)
 
         self._text_rect = self._text_img.get_rect()
-        size = self._font.get_height()
-        self.rect = self._text_rect.inflate(2 * size, 2 * size)
+        padding = self._font.get_height()
+        self.rect = self._text_rect.inflate(2 * padding, 2 * padding)
         rect_center = (self.rect.w // 2, self.rect.h // 2)
         self._text_rect.center = rect_center
 

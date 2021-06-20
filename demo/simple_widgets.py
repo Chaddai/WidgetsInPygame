@@ -1,13 +1,14 @@
 import pygame
 from pygame.constants import *
-import wipyg
 from wipyg import buttons, label
+from wipyg import entry
 from wipyg.abstracts import Button
 
 pygame.init()
 
 screen = pygame.display.set_mode((320, 240))
 screen_rect = screen.get_rect()
+pygame.display.set_caption("Demo of wipyg Widgets")
 
 but_quit = buttons.StandardButton(text="Quitter")
 
@@ -39,7 +40,10 @@ but_disabled.rect.bottomleft = screen_rect.bottomleft
 lab = label.Label(text="Bonjour tout le monde")
 lab.rect.center = screen_rect.center
 
-widgets = pygame.sprite.RenderPlain(but_quit, but_print, but_disabled, lab)
+ent = entry.Entry(value="Et ", length=10, state=entry.Entry.SELECTED)
+ent.rect.topright = screen_rect.topright
+
+widgets = pygame.sprite.RenderPlain(but_quit, but_print, but_disabled, lab, ent)
 
 looping = True
 while looping:
@@ -50,7 +54,7 @@ while looping:
             looping = False
 
     widgets.update()
-    screen.fill((255, 255, 255))
+    screen.fill((150, 0, 0))
     widgets.draw(screen)
 
     pygame.display.flip()
