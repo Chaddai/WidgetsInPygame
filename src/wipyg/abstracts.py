@@ -154,12 +154,12 @@ class Button(Widget, ABC):
     ACTIVE = 1
     DISABLED = 2
 
-    def _mouse_down(self, e):
-        if self.state != Button.DISABLED and self.rect.collidepoint(e.pos):
+    def _mouse_down(self, source, e):
+        if self.rect.collidepoint(e.pos):
             self.state = Button.ACTIVE
 
-    def _mouse_up(self, e):
-        if self.state != Button.DISABLED and self.rect.collidepoint(e.pos):
+    def _mouse_up(self, source, e):
+        if self.rect.collidepoint(e.pos):
             self.state = Button.INACTIVE
             post(Event(Button.CLICKED, {"button": self}))
 
@@ -168,3 +168,7 @@ class Button(Widget, ABC):
         self.state = Button.INACTIVE
         self._reactions[MOUSEBUTTONDOWN].append(self._mouse_down)
         self._reactions[MOUSEBUTTONUP].append(self._mouse_up)
+
+    def react(self, e: Event):
+        if self.state != Button.DISABLED:
+            return super().react(e)

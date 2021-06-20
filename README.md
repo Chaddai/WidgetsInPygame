@@ -10,7 +10,7 @@ Un module Python implémentant quelques classes de widgets utilisables dans l'en
 - `Label`
 - classe abstraite `Button`
 
-  - `CheckButton`
+  - `StandardButton`
   - `CancelButton`
 
 - `TextEntry`
