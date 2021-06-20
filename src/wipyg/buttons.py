@@ -12,7 +12,6 @@ class StandardButton(Button):
         self._font = Font(font, size)
         self._text = text
         self.rect = Rect(0, 0, 0, 0)
-        self._modified = False
         self._draw_button()
 
     def _draw_button(self):

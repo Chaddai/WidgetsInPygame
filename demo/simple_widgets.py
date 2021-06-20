@@ -1,7 +1,7 @@
 import pygame
 from pygame.constants import *
 import wipyg
-from wipyg import buttons
+from wipyg import buttons, label
 from wipyg.abstracts import Button
 
 pygame.init()
@@ -36,7 +36,10 @@ but_disabled = buttons.StandardButton()
 but_disabled.state = Button.DISABLED
 but_disabled.rect.bottomleft = screen_rect.bottomleft
 
-widgets = pygame.sprite.RenderPlain(but_quit, but_print, but_disabled)
+lab = label.Label(text="Bonjour tout le monde")
+lab.rect.center = screen_rect.center
+
+widgets = pygame.sprite.RenderPlain(but_quit, but_print, but_disabled, lab)
 
 looping = True
 while looping:
