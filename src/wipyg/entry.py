@@ -144,10 +144,25 @@ class Entry(Widget):
         if 0 <= state <= 2:
             self._state = state
         else:
-            raise ValueError
+            raise ValueError()
 
     state = property(
         _get_state,
         _set_state,
         doc="State of the Entry, one of SELECTED, DESELECTED or DISABLED",
+    )
+
+    def _get_cursor(self):
+        return self._cursor
+
+    def _set_cursor(self, cursor: int):
+        if 0 <= cursor <= len(self._value):
+            self._cursor = cursor
+        else:
+            raise ValueError()
+
+    cursor = property(
+        _get_cursor,
+        _set_cursor,
+        doc="Place of the cursor (after self.cursor letters) from 0 to the value length",
     )
