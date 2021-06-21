@@ -24,16 +24,14 @@ class PlainButton(Button):
         self._text_img = self._font.render(self._text, True, text_color)
 
         self._text_rect = self._text_img.get_rect()
+        xsize, ysize = self._text_rect.size
         padding = self._font.get_height()
-        self.rect = self._text_rect.inflate(2 * padding, 2 * padding)
-        rect_center = (self.rect.w // 2, self.rect.h // 2)
-        self._text_rect.center = rect_center
+        self.rect = Rect(0, 0, xsize + 2 * padding, ysize + 2 * padding)
+        self._text_rect.center = self.rect.center
 
         self.image = Surface(self.rect.size, SRCALPHA)
         self.image.fill(bg_color)
-        border = self.rect.inflate(-2, -2)
-        border.center = rect_center
-        rect(self.image, (0, 0, 0), border, width=2)
+        rect(self.image, (0, 0, 0), self.rect, width=3)
         self.image.blit(self._text_img, self._text_rect)
 
         # reposition the rect as initially
