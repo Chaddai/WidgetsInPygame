@@ -63,7 +63,7 @@ class Widget(Sprite, ABC):
         type : int
             Type (pygame.event.EventType) of event the callback will be called for
         callback : (Widget, Event) -> bool
-            Function called with the Widget that called react() and the event
+            Function called with the Widget that called react() and the event, return True to stop the upward propagation of the event
 
         Returns
         -------
@@ -230,6 +230,14 @@ class Container(Widget, ABC):
         if not stop_propagation:
             super().react(event)
 
+    def update(self, *args, **kwargs) -> None:
+        for i in range(self._lines):
+            for j in range(self._columns):
+                w = self._grid[i][j]
+                if isinstance(w, Sprite):
+                    w.update()
+        self.redraw()
+
     def _get_lines(self):
         return self._lines
 
@@ -284,22 +292,15 @@ class Container(Widget, ABC):
         doc="Number of columns, setting it may destroy some columns of Widgets",
     )
 
-    def update(self, *args, **kwargs) -> None:
-        for i in range(self._lines):
-            for j in range(self._columns):
-                w = self._grid[i][j]
-                if isinstance(w, Sprite):
-                    w.update()
-        self.redraw()
-
 
 class Button(Widget, ABC):
     """Abstract class for a Widget that can be "clicked" and can be in an "active", "inactive" or "disabled" state
 
-    Special event
+    Custom event
     -------------
     Button.CLICKED
-        launched if the mouse has a left MOUSEBUTTONUP on this button
+        launched if the mouse has a left MOUSEBUTTONUP on this button,
+        contains a "button" attribute
 
     Attributes
     ----------

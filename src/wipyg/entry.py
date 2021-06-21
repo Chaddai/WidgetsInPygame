@@ -18,10 +18,16 @@ class Entry(Widget):
         how many letter before the displayed cursor
     state : int
         state of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED)
+
+    Custom event
+    -------------
+    Entry.SUBMIT
+        launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
+        contains a "value" attribute of type str
     """
 
     # Class constants
-
+    SUBMIT = custom_type()
     SELECTED = 0
     DESELECTED = 1
     DISABLED = 2
@@ -123,6 +129,9 @@ class Entry(Widget):
                 self._cursor = len(self._value)
             elif e.key == K_HOME:
                 self._cursor = 0
+            elif e.key == K_KP_ENTER or e.key == K_RETURN:
+                self.state = Entry.DESELECTED
+                post(Event(Entry.SUBMIT, dict={"value": self.value}))
             elif (
                 letter != ""
                 # don't react to Control characters
