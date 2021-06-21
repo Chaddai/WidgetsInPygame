@@ -10,8 +10,10 @@ class PlainButton(Button):
     override _colors to provide variations with different colors (in the three states)
     """
 
-    def __init__(self, text="Ok", font=None, size=30) -> None:
-        super().__init__()
+    def __init__(
+        self, text="Ok", font=None, size=30, state: int = Button.INACTIVE
+    ) -> None:
+        super().__init__(state)
         self._font = Font(font, size)
         self._text = text
         self.rect = Rect(0, 0, 0, 0)
@@ -80,3 +82,26 @@ class SubmitButton(PlainButton):
             bg_color = (0, 110, 0)
             text_color = (100, 100, 100)
         return bg_color, text_color
+
+
+class IconButton(Button):
+    def __init__(
+        self, icon: Surface, active_icon: Surface = None, state: int = Button.INACTIVE
+    ) -> None:
+        super().__init__(state)
+        if active_icon is None:
+            active_icon = icon
+        self._icons = [icon, active_icon, icon]
+        if active_icon.get_rect() != icon.get_rect():
+            raise ValueError(
+                "Both the icon and active_icon must have the same dimensions"
+            )
+        self.rect = icon.get_rect()
+        self.image = self._icons[state]
+
+    def _set_state(self, state):
+        self.image = self._icons[state]
+        super()._set_state(state)
+
+    def redraw(self):
+        self.image = self._icons[self.state]

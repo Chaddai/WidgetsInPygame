@@ -1,10 +1,13 @@
+from os import close
 from wipyg.abstracts import *
 from pygame.font import Font
 from pygame import Surface, color
 from pygame.draw import *
 
+from wipyg.buttons import IconButton
 
-class Frame(Container):
+
+class Frame(GridContainer):
     """A gridded Container without frills
 
     Attributes
@@ -14,14 +17,14 @@ class Frame(Container):
     """
 
     def __init__(
-        self, widgets: list[list[Widget]] = [[None]], bg_color=(255, 255, 255, 0)
+        self, widgets: list[list[Widget]], bg_color=(255, 255, 255, 0)
     ) -> None:
         """Create a gridded container that simply display all its children in the minimum space, each centered in its cell
 
         Parameters
         ----------
         widgets : list[list[Widget]], optional
-            An initial grid of widgets, by default [[None]], don't give it an empty list
+            An initial grid of widgets, don't give it an empty list
         bg_color : color (pygame.color compatible)
             The background color of the Frame, by default transparent
         Raises
@@ -42,16 +45,15 @@ class Frame(Container):
         for y in range(self.lines):
             for x in range(self.columns):
                 w = self._grid[y][x]
-                if isinstance(w, Widget):
-                    w.container = self
+                if isinstance(w, Sprite):
+                    self.add_widget(w)
 
-        self._refresh_dims()
         self.rect = self._grid_rect.copy()
         self.redraw()
 
     def redraw(self):
         bg_color = self._bg_color
-
+        self._refresh_dims()
         self.rect.size = self._grid_rect.size
 
         self.image = Surface(self.rect.size, SRCALPHA)
@@ -61,10 +63,14 @@ class Frame(Container):
             for x in range(self.columns):
                 w = self._grid[y][x]
                 if isinstance(w, Sprite):
+                    # center the subwidgets in the cells
                     r = w.rect
                     i = w.image
                     r.center = self._cells[y][x].center
                     self.image.blit(i, r)
+                    # place the rectangle of the subwidgets relative to the screen for
+                    # correct event reactions
+                    r.move_ip(self.rect.topleft)
 
     def _get_bg_color(self):
         return self._bg_color
@@ -76,3 +82,47 @@ class Frame(Container):
     bg_color = property(
         _get_bg_color, _set_bg_color, doc="The background color of the Frame"
     )
+
+
+CROSS = Surface((20, 20), SRCALPHA)
+line(CROSS, (0, 0, 0), (4, 4), (16, 16))
+line(CROSS, (0, 0, 0), (16, 4), (4, 16))
+BAR = Surface((20, 20), SRCALPHA)
+line(BAR, (0, 0, 0), (4, 10), (16, 10))
+
+
+class Window(Container):
+    """A container with a window decoration, allowing to close or minimize (roll up) the container"""
+
+    def __init__(self, window_content: Widget, bar_color=(110, 110, 110)) -> None:
+        super().__init__()
+        self._close = IconButton(CROSS)
+        self._minimize = IconButton(BAR)
+        self._content = window_content
+        self.add_widget(self._close)
+        self.add_widget(self._minimize)
+        self.add_widget(window_content)
+
+        self.rect = Rect(0, 0, 0, 0)
+
+        self.redraw()
+
+    def redraw(self):
+        self._content.rect.topleft = self.rect.move(0, 20).topleft
+        self._content.redraw()
+        content_img = self._content.image
+        content_rect = content_img.get_rect(y=20)
+
+        self.rect.size = content_rect.size
+        self.rect.height += 20
+        self.image = Surface(self.rect.size, SRCALPHA)
+
+        self.image.blit(content_img, content_rect)
+        rect(self.image, (110, 110, 110), Rect(0, 0, self.rect.width, 20))
+
+        self._close.rect.topright = self.rect.topright
+        self._minimize.rect.topright = self.rect.move(-20, 0).topright
+        self._close.redraw()
+        self._minimize.redraw()
+        self.image.blit(self._close.image, Rect(self.rect.width - 20, 0, 20, 20))
+        self.image.blit(self._minimize.image, Rect(self.rect.width - 40, 0, 20, 20))

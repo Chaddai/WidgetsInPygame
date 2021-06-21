@@ -103,12 +103,69 @@ class Container(Widget, ABC):
 
     Methods
     -------
+    add_widget(w : Widget)
+        Add w to the container and change w.container
+    del_widget(w : Widget)
+        Delete the widget from the container and set w.container to None
+    """
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._widgets = []
+
+    def kill(self) -> None:
+        super().kill()
+        for w in self._widgets:
+            w.kill()
+
+    def react(self, event: Event):
+        stop_propagation = False
+        for w in self._widgets:
+            if isinstance(w, Widget):
+                stop = w.react(event)
+                stop_propagation = stop_propagation or stop
+        if not stop_propagation:
+            super().react(event)
+
+    def update(self, *args, **kwargs) -> None:
+        for w in self._widgets:
+            w.update()
+        self.redraw()
+
+    def add_widget(self, w: Widget):
+        """Add w to the container and change w.container
+
+        Parameters
+        ----------
+        w : Widget
+        """
+        self._widgets.append(w)
+        if isinstance(w, Widget):
+            w.container = self
+
+    def del_widget(self, w: Widget):
+        """Delete the widget from the container, set w.container to None and call w.kill()
+
+        Parameters
+        ----------
+        w : Widget
+        """
+        self._widgets.remove(w)
+        if isinstance(w, Widget):
+            w.container = None
+
+
+class GridContainer(Container, ABC):
+    """Abstract class for a container that place its widgets on a grid
+
+    Methods
+    -------
     set_grid(col : int, line : int, w : Widget)
         Put a Widget on the given position, extending the grid if necessary
     get_grid(col : int, line : int) -> Widget
         Get the Widget in a certain position of the grid
-    del_widget(col : int, line : int)
-        Destroy (call kill()) the Widget in the given position
+    del_cell(col : int, line : int) -> Widget
+        Remove the Widget in the given position from the grid and from the container
 
     Attributes
     ----------
@@ -142,12 +199,14 @@ class Container(Widget, ABC):
 
     def _refresh_dims(self):
         """Refresh the _xdims, _ydims and _grid_rect attributes"""
+        self._xdims = [0] * self.columns
+        self._ydims = [0] * self.lines
         for i in range(self._lines):
             for j in range(self._columns):
                 w = self._grid[i][j]
                 if isinstance(w, Sprite):
                     self._xdims[j] = max(self._xdims[j], w.rect.width)
-                    self._ydims[j] = max(self._ydims[j], w.rect.height)
+                    self._ydims[i] = max(self._ydims[i], w.rect.height)
         self._grid_rect.width = sum(self._xdims)
         self._grid_rect.height = sum(self._ydims)
         self._cells = self._compute_cells()
@@ -169,7 +228,7 @@ class Container(Widget, ABC):
         if line > self._lines:
             self.lines = line
         self._grid[line][col] = w
-        w.container = self
+        self.add_widget(w)
 
         self._refresh_dims()
 
@@ -193,50 +252,29 @@ class Container(Widget, ABC):
         else:
             return self._grid[line][col]
 
-    def del_widget(self, col: int, line: int):
-        """Destroy (call kill()) the Widget in the given position
+    def del_cell(self, col: int, line: int) -> Widget:
+        """Remove the Widget in the given position from the grid and from the container
 
         Parameters
         ----------
         col : int
         line : int
+
+        Returns
+        -------
+        Widget
+            The widget that was removed
         """
+        w = None
         if col > self._columns or line > self._lines:
             return
         else:
             w = self._grid[line][col]
-            if isinstance(w, Sprite):
-                w.kill()
             self._grid[line][col] = None
+            self.del_widget(w)
 
         self._refresh_dims()
-
-    def kill(self) -> None:
-        super().kill()
-        for y in range(self._lines):
-            for x in range(self._columns):
-                w = self._grid[y][x]
-                if isinstance(w, Sprite):
-                    w.kill()
-
-    def react(self, event: Event):
-        stop_propagation = False
-        for y in range(self._lines):
-            for x in range(self._columns):
-                w = self._grid[y][x]
-                if isinstance(w, Widget):
-                    stop = w.react(event)
-                    stop_propagation = stop_propagation or stop
-        if not stop_propagation:
-            super().react(event)
-
-    def update(self, *args, **kwargs) -> None:
-        for i in range(self._lines):
-            for j in range(self._columns):
-                w = self._grid[i][j]
-                if isinstance(w, Sprite):
-                    w.update()
-        self.redraw()
+        return w
 
     def _get_lines(self):
         return self._lines
@@ -250,11 +288,9 @@ class Container(Widget, ABC):
                     if isinstance(w, Sprite):
                         w.kill()
             self._grid = self._grid[:lines]
-            self._ydims = self._ydims[:lines]
         elif lines > self._lines:
             for line in range(self.lines, lines):
                 self._grid.append([None for _ in range(self._columns)])
-                self._ydims.append(0)
 
         self._lines = lines
         self._refresh_dims()
@@ -277,11 +313,9 @@ class Container(Widget, ABC):
                     if isinstance(w, Sprite):
                         w.kill()
                 self._grid[i] = line[:columns]
-            self._xdims = self._xdims[:columns]
         elif columns > self._columns:
             for line in self._grid:
                 line.extend([None for _ in range(self._columns, columns)])
-            self._xdims.extend([0] * (columns - self._columns))
 
         self._columns = columns
         self._refresh_dims()
@@ -318,13 +352,14 @@ class Button(Widget, ABC):
             self.state = Button.ACTIVE
 
     def _mouse_up(self, source, e):
-        if self.rect.collidepoint(e.pos):
+        if self.state == Button.ACTIVE:
             self.state = Button.INACTIVE
+        if self.rect.collidepoint(e.pos):
             post(Event(Button.CLICKED, {"button": self}))
 
-    def __init__(self) -> None:
+    def __init__(self, state: int = 0) -> None:
         super().__init__()
-        self._state = Button.INACTIVE
+        self._state = state
         self._reactions[MOUSEBUTTONDOWN].append(self._mouse_down)
         self._reactions[MOUSEBUTTONUP].append(self._mouse_up)
 
