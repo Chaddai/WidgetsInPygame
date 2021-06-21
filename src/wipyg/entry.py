@@ -36,12 +36,12 @@ class Entry(Widget):
         self._state = state
         self._first_blink = get_ticks()
         self.rect = Rect(0, 0, 0, 0)
-        self._draw_entry()
+        self.redraw()
 
         self.add_reaction(KEYDOWN, self._press_key)
         self.add_reaction(MOUSEBUTTONUP, self._select)
 
-    def _draw_entry(self):
+    def redraw(self):
         if self._state == Entry.DISABLED:
             bg_color = (200, 200, 200)
             text_color = (100, 100, 100)
@@ -78,7 +78,7 @@ class Entry(Widget):
         self.rect.topleft = pos
 
     def update(self, *args, **kwargs) -> None:
-        self._draw_entry()
+        self.redraw()
 
     def _press_key(self, _, e):
         letter = e.unicode

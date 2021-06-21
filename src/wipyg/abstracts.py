@@ -9,13 +9,16 @@ from pygame.constants import *
 class Widget(Sprite, ABC):
     """Abstract class for widgets
 
-    Methods :
+    Methods:
     - update()
     - react(e : Event)
     - add_reaction(type : int, callback : (Widget, Event) -> bool) -> (int, int)
     - del_reaction(idReaction : (int, int))
 
-    Properties :
+    Abstract methods:
+    - redraw() : change the image attribute to reflect the current state of the Widget
+
+    Properties:
     - rect : Rect
     - image : Surface
     """
@@ -36,6 +39,10 @@ class Widget(Sprite, ABC):
     def del_reaction(self, idReaction: Tuple[int, int]):
         type, index = idReaction
         del self._reactions[type][index]
+
+    @abstractmethod
+    def redraw(self):
+        raise NotImplementedError()
 
 
 class Container(Widget, ABC):
@@ -165,10 +172,23 @@ class Button(Widget, ABC):
 
     def __init__(self) -> None:
         super().__init__()
-        self.state = Button.INACTIVE
+        self._state = Button.INACTIVE
         self._reactions[MOUSEBUTTONDOWN].append(self._mouse_down)
         self._reactions[MOUSEBUTTONUP].append(self._mouse_up)
 
     def react(self, e: Event):
         if self.state != Button.DISABLED:
             return super().react(e)
+
+    def _get_state(self):
+        return self._state
+
+    def _set_state(self, state):
+        self._state = state
+        self.redraw()
+
+    state = property(
+        _get_state,
+        _set_state,
+        doc="State of the Button : INACTIVE (normal), ACTIVE (pressed), DISABLED (unresponsive)",
+    )

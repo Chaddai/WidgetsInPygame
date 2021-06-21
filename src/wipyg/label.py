@@ -13,9 +13,9 @@ class Label(Widget):
         self._text = text
         self._text_color = color
         self.rect = Rect(0, 0, 0, 0)
-        self._draw_label()
+        self.redraw()
 
-    def _draw_label(self):
+    def redraw(self):
         bg_color = (255, 255, 255, 0)
 
         pos = self.rect.topleft
