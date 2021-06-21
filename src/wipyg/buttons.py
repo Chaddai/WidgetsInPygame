@@ -85,13 +85,39 @@ class SubmitButton(PlainButton):
 
 
 class IconButton(Button):
+    """A button that is just a Surface (or several if you chose to provide ACTIVE and DISABLED versions)"""
+
     def __init__(
-        self, icon: Surface, active_icon: Surface = None, state: int = Button.INACTIVE
+        self,
+        icon: Surface,
+        active_icon: Surface = None,
+        disabled_icon=None,
+        state: int = Button.INACTIVE,
     ) -> None:
+        """Create an icon button
+
+        Parameters
+        ----------
+        icon : Surface
+            the normal appearance of the button, clicking anywhere on the Surface will post a Button.CLICKED
+        active_icon : Surface, optional
+            Appearance of the button when clicked on (before MOUSEBUTTONUP fires), by default the same as icon
+        disabled_icon : [type], optional
+            Appearance of the button if it is in Button.DISABLED state, by default the same as icon
+        state : int, optional
+            Initial state of the button, by default Button.INACTIVE
+
+        Raises
+        ------
+        ValueError
+            [description]
+        """
         super().__init__(state)
         if active_icon is None:
             active_icon = icon
-        self._icons = [icon, active_icon, icon]
+        if disabled_icon is None:
+            disabled_icon = icon
+        self._icons = [icon, active_icon, disabled_icon]
         if active_icon.get_rect() != icon.get_rect():
             raise ValueError(
                 "Both the icon and active_icon must have the same dimensions"
