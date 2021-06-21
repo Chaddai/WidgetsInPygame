@@ -5,7 +5,7 @@ from pygame.draw import *
 
 
 class Label(Widget):
-    """A simple label Widget to show some text"""  # TODO add newline support
+    """A simple label Widget to show some text"""  # TODO #1 add newline support
 
     def __init__(self, text="Hello", font=None, size=30, color=(0, 0, 0)) -> None:
         super().__init__()
