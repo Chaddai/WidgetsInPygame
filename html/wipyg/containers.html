@@ -123,7 +123,9 @@ line(BAR, (0, 0, 0), (4, 10), (16, 10))
 
 
 class Window(Container):
-    &#34;&#34;&#34;A container with a window decoration, allowing to close or minimize (roll up) the container&#34;&#34;&#34;
+    &#34;&#34;&#34;A container with a window decoration
+
+    The bar allows to close or minimize (roll up) or move the window as usual&#34;&#34;&#34;
 
     def __init__(self, window_content: Widget, bar_color=(110, 110, 110)) -&gt; None:
         &#34;&#34;&#34;Create a window with a bar with the usual controls to close or minimize the window
@@ -149,6 +151,9 @@ class Window(Container):
         self._minimized = False
         self._close.add_reaction(Button.CLICKED, self._close_window)
         self._minimize.add_reaction(Button.CLICKED, self._min_window)
+        self.add_reaction(MOUSEBUTTONDOWN, self._grabbing)
+        self.add_reaction(MOUSEBUTTONUP, self._ungrabbing)
+        self._grabbed = False
 
         self.redraw()
 
@@ -189,7 +194,23 @@ class Window(Container):
                 self._content.disable()
             else:
                 self._content.enable()
-            self.redraw()</code></pre>
+            self.redraw()
+
+    def _grabbing(self, source, e):
+        bar = self.rect.copy()
+        bar.height = 20
+        bar.width -= 40
+        if bar.collidepoint(e.pos):
+            self._grabbed = self.add_reaction(MOUSEMOTION, self._move_window)
+
+    def _ungrabbing(self, source, e):
+        if self._grabbed:
+            self.del_reaction(self._grabbed)
+            self._grabbed = False
+
+    def _move_window(self, source, e):
+        self.rect.move_ip(e.rel)
+        self.redraw()</code></pre>
 </details>
 </section>
 <section>
@@ -355,7 +376,8 @@ class Window(Container):
 <span>(</span><span>window_content: <a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a>, bar_color=(110, 110, 110))</span>
 </code></dt>
 <dd>
-<div class="desc"><p>A container with a window decoration, allowing to close or minimize (roll up) the container</p>
+<div class="desc"><p>A container with a window decoration</p>
+<p>The bar allows to close or minimize (roll up) or move the window as usual</p>
 <p>Create a window with a bar with the usual controls to close or minimize the window</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
@@ -369,7 +391,9 @@ class Window(Container):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Window(Container):
-    &#34;&#34;&#34;A container with a window decoration, allowing to close or minimize (roll up) the container&#34;&#34;&#34;
+    &#34;&#34;&#34;A container with a window decoration
+
+    The bar allows to close or minimize (roll up) or move the window as usual&#34;&#34;&#34;
 
     def __init__(self, window_content: Widget, bar_color=(110, 110, 110)) -&gt; None:
         &#34;&#34;&#34;Create a window with a bar with the usual controls to close or minimize the window
@@ -395,6 +419,9 @@ class Window(Container):
         self._minimized = False
         self._close.add_reaction(Button.CLICKED, self._close_window)
         self._minimize.add_reaction(Button.CLICKED, self._min_window)
+        self.add_reaction(MOUSEBUTTONDOWN, self._grabbing)
+        self.add_reaction(MOUSEBUTTONUP, self._ungrabbing)
+        self._grabbed = False
 
         self.redraw()
 
@@ -435,7 +462,23 @@ class Window(Container):
                 self._content.disable()
             else:
                 self._content.enable()
-            self.redraw()</code></pre>
+            self.redraw()
+
+    def _grabbing(self, source, e):
+        bar = self.rect.copy()
+        bar.height = 20
+        bar.width -= 40
+        if bar.collidepoint(e.pos):
+            self._grabbed = self.add_reaction(MOUSEMOTION, self._move_window)
+
+    def _ungrabbing(self, source, e):
+        if self._grabbed:
+            self.del_reaction(self._grabbed)
+            self._grabbed = False
+
+    def _move_window(self, source, e):
+        self.rect.move_ip(e.rel)
+        self.redraw()</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
