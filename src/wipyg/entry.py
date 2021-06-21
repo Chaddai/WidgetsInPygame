@@ -183,6 +183,10 @@ class Entry(Widget):
             self._state = state
         else:
             raise ValueError("must be one of SELECTED, DESELECTED or DISABLED")
+        if state == Entry.DISABLED:
+            self.disable()
+        else:
+            self.enable()
 
     state = property(
         _get_state,

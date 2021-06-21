@@ -95,6 +95,15 @@ class Window(Container):
     """A container with a window decoration, allowing to close or minimize (roll up) the container"""
 
     def __init__(self, window_content: Widget, bar_color=(110, 110, 110)) -> None:
+        """Create a window with a bar with the usual controls to close or minimize the window
+
+        Parameters
+        ----------
+        window_content : Widget
+            The content of the window, usually a Frame but may be a single Widget
+        bar_color : color, optional
+            The color of the window bar, by default (110, 110, 110)
+        """
         super().__init__()
         self._close = IconButton(CROSS)
         self._minimize = IconButton(BAR)
@@ -105,19 +114,29 @@ class Window(Container):
 
         self.rect = Rect(0, 0, 0, 0)
 
+        self._minimized = False
+        self._close.add_reaction(Button.CLICKED, self._close_window)
+        self._minimize.add_reaction(Button.CLICKED, self._min_window)
+
         self.redraw()
 
     def redraw(self):
-        self._content.rect.topleft = self.rect.move(0, 20).topleft
-        self._content.redraw()
-        content_img = self._content.image
-        content_rect = content_img.get_rect(y=20)
+        if self._minimized:
+            self.rect.height = 20
+        else:
+            self._content.rect.topleft = self.rect.move(0, 20).topleft
+            self._content.redraw()
+            content_img = self._content.image
+            content_rect = content_img.get_rect(y=20)
 
-        self.rect.size = content_rect.size
-        self.rect.height += 20
+            self.rect.size = content_rect.size
+            self.rect.height += 20
+
         self.image = Surface(self.rect.size, SRCALPHA)
 
-        self.image.blit(content_img, content_rect)
+        if not self._minimized:
+            self.image.blit(content_img, content_rect)
+
         rect(self.image, (110, 110, 110), Rect(0, 0, self.rect.width, 20))
 
         self._close.rect.topright = self.rect.topright
@@ -126,3 +145,16 @@ class Window(Container):
         self._minimize.redraw()
         self.image.blit(self._close.image, Rect(self.rect.width - 20, 0, 20, 20))
         self.image.blit(self._minimize.image, Rect(self.rect.width - 40, 0, 20, 20))
+
+    def _close_window(self, source, e):
+        if e.button == self._close:
+            self.kill()
+
+    def _min_window(self, source, e):
+        if e.button == self._minimize:
+            self._minimized = not self._minimized
+            if self._minimized:
+                self._content.disable()
+            else:
+                self._content.enable()
+            self.redraw()

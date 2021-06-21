@@ -19,6 +19,10 @@ class Widget(Sprite, ABC):
         Use the returned value as an id for the callback so you can delete it
     del_reaction(idReaction : (int, int))
         Delete a callback with the id that was returned when you added it
+    disable()
+        Disable the widget so that it doesn't react to events anymore
+    enable()
+        Enable the widget to react to events
 
     Abstract methods
     ----------------
@@ -35,6 +39,7 @@ class Widget(Sprite, ABC):
         super().__init__()
         self._reactions = DefaultDict(list)
         self.container = None
+        self._enabled = True
 
     def react(self, event: Event):
         """Loop through the callbacks installed through add_reaction and call the appropriates one for the event type
@@ -49,11 +54,12 @@ class Widget(Sprite, ABC):
         bool
             Must the propagation of the event to containers be stopped ?
         """
-        stop_propagation = False
-        for reaction in self._reactions[event.type]:
-            stop = reaction(self, event)
-            stop_propagation = stop_propagation or stop
-        return stop_propagation
+        if self._enabled:
+            stop_propagation = False
+            for reaction in self._reactions[event.type]:
+                stop = reaction(self, event)
+                stop_propagation = stop_propagation or stop
+            return stop_propagation
 
     def add_reaction(self, type: int, callback) -> Tuple[int, int]:
         """Add a callback to react to event of a certain type via react
@@ -84,6 +90,14 @@ class Widget(Sprite, ABC):
         """
         type, index = idReaction
         del self._reactions[type][index]
+
+    def disable(self):
+        """Disable the widget so that it doesn't react to events anymore"""
+        self._enabled = False
+
+    def enable(self):
+        """Enable the widget to react to events"""
+        self._enabled = True
 
     @abstractmethod
     def redraw(self):
@@ -153,6 +167,18 @@ class Container(Widget, ABC):
         self._widgets.remove(w)
         if isinstance(w, Widget):
             w.container = None
+
+    def disable(self):
+        for w in self._widgets:
+            if isinstance(w, Widget):
+                w.disable()
+        super().disable()
+
+    def enable(self):
+        for w in self._widgets:
+            if isinstance(w, Widget):
+                w.enable()
+        super().enable()
 
 
 class GridContainer(Container, ABC):
@@ -364,14 +390,17 @@ class Button(Widget, ABC):
         self._reactions[MOUSEBUTTONUP].append(self._mouse_up)
 
     def react(self, e: Event):
-        if self.state != Button.DISABLED:
-            return super().react(e)
+        return super().react(e)
 
     def _get_state(self):
         return self._state
 
     def _set_state(self, state):
         self._state = state
+        if state == Button.DISABLED:
+            self.disable()
+        else:
+            self.enable()
         self.redraw()
 
     state = property(
