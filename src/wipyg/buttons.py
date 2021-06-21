@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Provide several buttons widget type."""
+
 from wipyg.abstracts import *
 from pygame.font import Font
 from pygame import Surface
@@ -7,12 +10,25 @@ from pygame.draw import *
 class PlainButton(Button):
     """A normal button, light grey background when INACTIVE, almost white if ACTIVE, text greyed out if DISABLED
 
-    override _colors to provide variations with different colors (in the three states)
+    Derive this class and override _colors to provide variations with different colors (in the three states)
     """
 
     def __init__(
         self, text="Ok", font=None, size=30, state: int = Button.INACTIVE
     ) -> None:
+        """Create a plain button with grey background and black text
+
+        Parameters
+        ----------
+        text : str, optional
+            The text displayed on the button, by default "Ok"
+        font : file | filename, optional
+            The source file for the font, by default None, that is the default Pygame sys font
+        size : int, optional
+            Font size (in pixels), by default 30
+        state : int, optional
+            Initial state of the button, one of (Button.ACTIVE, Button.INACTIVE, Button.DISABLED), by default Button.INACTIVE
+        """
         super().__init__(state)
         self._font = Font(font, size)
         self._text = text

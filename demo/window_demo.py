@@ -1,6 +1,6 @@
 import pygame
 from pygame.constants import *
-from wipyg import buttons, label, entry, containers
+from wipyg import buttons, label, containers
 from wipyg.abstracts import Button
 
 pygame.init()

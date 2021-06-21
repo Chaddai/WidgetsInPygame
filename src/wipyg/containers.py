@@ -1,4 +1,6 @@
-from os import close
+# -*- coding: utf-8 -*-
+"""Provides a Frame container, with a grid, and a Window container with decorations."""
+
 from wipyg.abstracts import *
 from pygame.font import Font
 from pygame import Surface, color
@@ -12,7 +14,7 @@ class Frame(GridContainer):
 
     Attributes
     ----------
-    bg_color : color (pygame.color compatible)
+    bg_color : color
         The background color of the Frame
     """
 
@@ -25,7 +27,7 @@ class Frame(GridContainer):
         ----------
         widgets : list[list[Widget]], optional
             An initial grid of widgets, don't give it an empty list
-        bg_color : color (pygame.color compatible)
+        bg_color : color
             The background color of the Frame, by default transparent
         Raises
         ------

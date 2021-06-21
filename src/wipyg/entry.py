@@ -1,4 +1,6 @@
-from os import close, stat
+# -*- coding: utf-8 -*-
+"""Provide the text Entry widget type."""
+
 from wipyg.abstracts import *
 from pygame.font import Font
 from pygame import Surface

@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
+"""Provides the base abstract class : Widget and the abstract Container, GridContainer and Button."""
+
 from abc import ABC, abstractmethod
 from typing import DefaultDict, Tuple
-from pygame.draw import line
 from pygame.sprite import *
 from pygame.event import Event, custom_type, post
 from pygame.rect import Rect
@@ -364,8 +366,8 @@ class Button(Widget, ABC):
 
     Attributes
     ----------
-    state : int
-        State of the button, one of (Button.ACTIVE, Button.INACTIVE, Button.DISABLED)
+    state : {Button.ACTIVE, Button.INACTIVE, Button.DISABLED}
+        State of the button
     """
 
     CLICKED = custom_type()
@@ -406,5 +408,5 @@ class Button(Widget, ABC):
     state = property(
         _get_state,
         _set_state,
-        doc="State of the Button : INACTIVE (normal), ACTIVE (pressed), DISABLED (unresponsive)",
+        doc="State of the Button : INACTIVE (normal), ACTIVE (pressed) or DISABLED (unresponsive)",
     )
