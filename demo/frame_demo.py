@@ -1,11 +1,11 @@
 import pygame
 from pygame.constants import *
-from wipyg import buttons, label, entry
+from wipyg import buttons, label, entry, containers
 from wipyg.abstracts import Button
 
 pygame.init()
 
-screen = pygame.display.set_mode((320, 240))
+screen = pygame.display.set_mode((640, 480))
 screen_rect = screen.get_rect()
 pygame.display.set_caption("Demo of wipyg Widgets")
 
@@ -19,30 +19,28 @@ def quit(s, e):
 
 
 but_quit.add_reaction(Button.CLICKED, quit)
-but_quit.rect.bottomright = screen_rect.bottomright
 
 
-but_print = buttons.SubmitButton(text="Hello")
+but_close = buttons.CancelButton(text="Close")
 
 
-def hello(s, e):
+def close(s, e):
     if e.button == s:
-        print("hello world !")
+        s.container.kill()
+    return True  # stop event from propagating upward
 
 
-but_print.add_reaction(Button.CLICKED, hello)
-
-but_disabled = buttons.PlainButton()
-but_disabled.state = Button.DISABLED
-but_disabled.rect.bottomleft = screen_rect.bottomleft
+but_close.add_reaction(Button.CLICKED, close)
 
 lab = label.Label(text="Bonjour tout le monde")
-lab.rect.center = screen_rect.center
 
 ent = entry.Entry(value="Et ", length=10, state=entry.Entry.SELECTED)
-ent.rect.topright = screen_rect.topright
 
-widgets = pygame.sprite.RenderPlain(but_quit, but_print, but_disabled, lab, ent)
+frame = containers.Frame(
+    widgets=[[lab, but_close], [ent, but_quit]], bg_color=(110, 110, 110)
+)
+
+widgets = pygame.sprite.RenderPlain(frame)
 
 looping = True
 while looping:

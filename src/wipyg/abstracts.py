@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import DefaultDict, Tuple
+from pygame.draw import line
 from pygame.sprite import *
 from pygame.event import Event, custom_type, post
 from pygame.rect import Rect
@@ -23,11 +24,17 @@ class Widget(Sprite, ABC):
     ----------------
     redraw()
         Must change the image attribute to reflect the current state of the Widget
+
+    Attributes
+    ----------
+    container : Container
+        The Frame or Window or other subclass of Container that contains this Widget, or None if independent
     """
 
     def __init__(self) -> None:
         super().__init__()
         self._reactions = DefaultDict(list)
+        self.container = None
 
     def react(self, event: Event):
         """Loop through the callbacks installed through add_reaction and call the appropriates one for the event type
@@ -48,14 +55,14 @@ class Widget(Sprite, ABC):
             stop_propagation = stop_propagation or stop
         return stop_propagation
 
-    def add_reaction(self, type: int, callback: function) -> Tuple[int, int]:
+    def add_reaction(self, type: int, callback) -> Tuple[int, int]:
         """Add a callback to react to event of a certain type via react
 
         Parameters
         ----------
         type : int
             Type (pygame.event.EventType) of event the callback will be called for
-        callback : function
+        callback : (Widget, Event) -> bool
             Function called with the Widget that called react() and the event
 
         Returns
@@ -116,9 +123,22 @@ class Container(Widget, ABC):
         self._grid = [[None]]
         self._xdims = [0]
         self._ydims = [0]
+        self._cells = [[Rect(0, 0, 0, 0)]]
         self._columns = 1
         self._lines = 1
         self._grid_rect = Rect(0, 0, 0, 0)
+
+    def _compute_cells(self):
+        """compute a matrix of rectangles corresponding to the grid and its dimensions"""
+        cells = [[None for x in range(self.columns)] for y in range(self.lines)]
+        y_offset = 0
+        for y in range(self.lines):
+            x_offset = 0
+            for x in range(self.columns):
+                cells[y][x] = Rect(x_offset, y_offset, self._xdims[x], self._ydims[y])
+                x_offset += self._xdims[x]
+            y_offset += self._ydims[y]
+        return cells
 
     def _refresh_dims(self):
         """Refresh the _xdims, _ydims and _grid_rect attributes"""
@@ -130,6 +150,7 @@ class Container(Widget, ABC):
                     self._ydims[j] = max(self._ydims[j], w.rect.height)
         self._grid_rect.width = sum(self._xdims)
         self._grid_rect.height = sum(self._ydims)
+        self._cells = self._compute_cells()
 
     def set_grid(self, col: int, line: int, w: Widget):
         """Put a Widget on the given position, extending the grid if necessary
@@ -148,6 +169,9 @@ class Container(Widget, ABC):
         if line > self._lines:
             self.lines = line
         self._grid[line][col] = w
+        w.container = self
+
+        self._refresh_dims()
 
     def get_grid(self, col: int, line: int) -> Widget:
         """Get the Widget in a certain position of the grid
@@ -185,6 +209,27 @@ class Container(Widget, ABC):
                 w.kill()
             self._grid[line][col] = None
 
+        self._refresh_dims()
+
+    def kill(self) -> None:
+        super().kill()
+        for y in range(self._lines):
+            for x in range(self._columns):
+                w = self._grid[y][x]
+                if isinstance(w, Sprite):
+                    w.kill()
+
+    def react(self, event: Event):
+        stop_propagation = False
+        for y in range(self._lines):
+            for x in range(self._columns):
+                w = self._grid[y][x]
+                if isinstance(w, Widget):
+                    stop = w.react(event)
+                    stop_propagation = stop_propagation or stop
+        if not stop_propagation:
+            super().react(event)
+
     def _get_lines(self):
         return self._lines
 
@@ -201,6 +246,10 @@ class Container(Widget, ABC):
         elif lines > self._lines:
             for line in range(self.lines, lines):
                 self._grid.append([None for _ in range(self._columns)])
+                self._ydims.append(0)
+
+        self._lines = lines
+        self._refresh_dims()
 
     lines = property(
         _get_lines,
@@ -224,6 +273,10 @@ class Container(Widget, ABC):
         elif columns > self._columns:
             for line in self._grid:
                 line.extend([None for _ in range(self._columns, columns)])
+            self._xdims.extend([0] * (columns - self._columns))
+
+        self._columns = columns
+        self._refresh_dims()
 
     columns = property(
         _get_columns,
@@ -237,7 +290,7 @@ class Container(Widget, ABC):
                 w = self._grid[i][j]
                 if isinstance(w, Sprite):
                     w.update()
-        self._refresh_dims()
+        self.redraw()
 
 
 class Button(Widget, ABC):
