@@ -1,15 +1,12 @@
+# -*- coding: utf-8 -*-
+"""Show all the simple (non-container) widgets type in action"""
+
 import pygame
-from pygame.constants import *
+from pygame.locals import *
 from wipyg import buttons, label, entry
 from wipyg.abstracts import Button
 
-pygame.init()
-
-screen = pygame.display.set_mode((320, 240))
-screen_rect = screen.get_rect()
-pygame.display.set_caption("Demo of wipyg Widgets")
-
-but_quit = buttons.CancelButton(text="Quitter")
+# CALLBACKS
 
 
 def quit(s, e):
@@ -18,18 +15,24 @@ def quit(s, e):
         looping = False
 
 
-but_quit.add_reaction(Button.CLICKED, quit)
-but_quit.rect.bottomright = screen_rect.bottomright
-
-
-but_print = buttons.SubmitButton(text="Hello")
-
-
 def hello(s, e):
     if e.button == s:
         print("hello world !")
 
 
+# INITIALIZATION
+
+pygame.init()
+
+screen = pygame.display.set_mode((320, 240))
+screen_rect = screen.get_rect()
+pygame.display.set_caption("Demo of wipyg Widgets")
+
+but_quit = buttons.CancelButton(text="Quitter")
+but_quit.add_reaction(Button.CLICKED, quit)
+but_quit.rect.bottomright = screen_rect.bottomright
+
+but_print = buttons.SubmitButton(text="Hello")
 but_print.add_reaction(Button.CLICKED, hello)
 
 but_disabled = buttons.PlainButton()
@@ -45,6 +48,10 @@ ent.rect.topright = screen_rect.topright
 widgets = pygame.sprite.RenderPlain(but_quit, but_print, but_disabled, lab, ent)
 
 looping = True
+
+
+# MAIN LOOP
+
 while looping:
     for e in pygame.event.get():
         for w in widgets:

@@ -94,7 +94,9 @@ line(BAR, (0, 0, 0), (4, 10), (16, 10))
 
 
 class Window(Container):
-    """A container with a window decoration, allowing to close or minimize (roll up) the container"""
+    """A container with a window decoration
+
+    The bar allows to close or minimize (roll up) or move the window as usual"""
 
     def __init__(self, window_content: Widget, bar_color=(110, 110, 110)) -> None:
         """Create a window with a bar with the usual controls to close or minimize the window
@@ -120,6 +122,9 @@ class Window(Container):
         self._minimized = False
         self._close.add_reaction(Button.CLICKED, self._close_window)
         self._minimize.add_reaction(Button.CLICKED, self._min_window)
+        self.add_reaction(MOUSEBUTTONDOWN, self._grabbing)
+        self.add_reaction(MOUSEBUTTONUP, self._ungrabbing)
+        self._grabbed = False
 
         self.redraw()
 
@@ -161,3 +166,19 @@ class Window(Container):
             else:
                 self._content.enable()
             self.redraw()
+
+    def _grabbing(self, source, e):
+        bar = self.rect.copy()
+        bar.height = 20
+        bar.width -= 40
+        if bar.collidepoint(e.pos):
+            self._grabbed = self.add_reaction(MOUSEMOTION, self._move_window)
+
+    def _ungrabbing(self, source, e):
+        if self._grabbed:
+            self.del_reaction(self._grabbed)
+            self._grabbed = False
+
+    def _move_window(self, source, e):
+        self.rect.move_ip(e.rel)
+        self.redraw()
