@@ -8,13 +8,19 @@ import unicodedata
 
 
 class Entry(Widget):
-    """A text entry widget
+    """A text entry Widget
 
-    Additional properties:
-    - value : str
-    - cursor : int
-    - state : int (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED)
+    Attributes
+    ----------
+    value : str
+        the text displayed and edited
+    cursor : int
+        how many letter before the displayed cursor
+    state : int
+        state of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED)
     """
+
+    # Class constants
 
     SELECTED = 0
     DESELECTED = 1
@@ -27,7 +33,28 @@ class Entry(Widget):
         size: int = 30,
         length: int = 40,
         state: int = 1,
-    ) -> None:
+    ):
+        """
+        Parameters
+        ----------
+        value : str
+            Initial text in the Entry
+        font : file | str (filename)
+            Font to use for the Entry
+        size : int
+            Font size
+        length : int
+            How many character long can the Entry take
+        state : int
+            State of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED), DESELECTED by default
+
+        Raises
+        ------
+        ValueError
+            If the initial value is longer than length
+        """
+        if len(value) > length:
+            raise ValueError("value can't be longer than the length of the Entry")
         super().__init__()
         self._length = length
         self._font = Font(font, size)
@@ -124,6 +151,8 @@ class Entry(Widget):
         elif self._state == Entry.SELECTED and not self.rect.collidepoint(e.pos):
             self.state = Entry.DESELECTED
 
+    ## Properties
+
     def _get_value(self) -> str:
         return "".join(self._value)
 
@@ -144,7 +173,7 @@ class Entry(Widget):
         if 0 <= state <= 2:
             self._state = state
         else:
-            raise ValueError()
+            raise ValueError("must be one of SELECTED, DESELECTED or DISABLED")
 
     state = property(
         _get_state,
@@ -159,7 +188,7 @@ class Entry(Widget):
         if 0 <= cursor <= len(self._value):
             self._cursor = cursor
         else:
-            raise ValueError()
+            raise ValueError("value can't be longer than the length of the Entry")
 
     cursor = property(
         _get_cursor,
