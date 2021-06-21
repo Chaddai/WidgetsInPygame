@@ -105,6 +105,7 @@ class Window(Container):
             The color of the window bar, by default (110, 110, 110)
         """
         super().__init__()
+        self._bar_color = bar_color
         self._close = IconButton(CROSS)
         self._minimize = IconButton(BAR)
         self._content = window_content
@@ -137,7 +138,7 @@ class Window(Container):
         if not self._minimized:
             self.image.blit(content_img, content_rect)
 
-        rect(self.image, (110, 110, 110), Rect(0, 0, self.rect.width, 20))
+        rect(self.image, self._bar_color, Rect(0, 0, self.rect.width, 20))
 
         self._close.rect.topright = self.rect.topright
         self._minimize.rect.topright = self.rect.move(-20, 0).topright

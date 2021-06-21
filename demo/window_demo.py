@@ -24,7 +24,8 @@ frame = containers.Frame(
     widgets=[[label.Label("Hello World!")], [but_quit]], bg_color=(110, 110, 110)
 )
 
-window = containers.Window(frame)
+window = containers.Window(frame, bar_color=(255, 0, 0, 100))
+window.rect.center = screen_rect.center
 
 widgets = pygame.sprite.RenderPlain(window)
 
@@ -37,7 +38,7 @@ while looping:
             looping = False
 
     widgets.update()
-    screen.fill((150, 0, 0))
+    screen.fill((50, 50, 200))
     widgets.draw(screen)
 
     pygame.display.flip()
