@@ -1,4 +1,4 @@
-from os import stat
+from os import close, stat
 from wipyg.abstracts import *
 from pygame.font import Font
 from pygame import Surface
@@ -82,7 +82,6 @@ class Entry(Widget):
 
     def _press_key(self, _, e):
         letter = e.unicode
-        # don't react to Control characters
         if self._state == Entry.SELECTED:
             if e.key == K_LEFT and self._cursor > 0:
                 self._cursor -= 1
@@ -99,6 +98,7 @@ class Entry(Widget):
                 self._cursor = 0
             elif (
                 letter != ""
+                # don't react to Control characters
                 and not unicodedata.category(letter).startswith("C")
                 and len(self._value) < self._length
             ):
@@ -106,6 +106,19 @@ class Entry(Widget):
                 self._cursor += 1
 
     def _select(self, _, e):
+        # move the cursor as close as possible to the click (if it is in the Entry)
+        if self.rect.collidepoint(e.pos):
+            padding = self._font.get_height()
+            xletters = [
+                self.rect.left + padding + self._font.size(self.value[:j])[0]
+                for j in range(len(self._value) + 1)
+            ]
+            closest = min(
+                range(len(self._value) + 1), key=lambda i: abs(e.pos[0] - xletters[i])
+            )
+            self._cursor = closest
+
+        # toggle SELECTED and DESELECTED state depending on where the user clicked
         if self._state == Entry.DESELECTED and self.rect.collidepoint(e.pos):
             self.state = Entry.SELECTED
         elif self._state == Entry.SELECTED and not self.rect.collidepoint(e.pos):
