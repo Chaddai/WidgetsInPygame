@@ -1,0 +1,1551 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>wipyg.abstracts API documentation</title>
+<meta name="description" content="Provides the base abstract class : Widget and the abstract Container, GridContainer and Button." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>wipyg.abstracts</code></h1>
+</header>
+<section id="section-intro">
+<p>Provides the base abstract class : Widget and the abstract Container, GridContainer and Button.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># -*- coding: utf-8 -*-
+&#34;&#34;&#34;Provides the base abstract class : Widget and the abstract Container, GridContainer and Button.&#34;&#34;&#34;
+
+from abc import ABC, abstractmethod
+from typing import DefaultDict, Tuple
+from pygame.sprite import *
+from pygame.event import Event, custom_type, post
+from pygame.rect import Rect
+from pygame.constants import *
+
+
+class Widget(Sprite, ABC):
+    &#34;&#34;&#34;Abstract class for widgets, extends Sprite
+
+    Methods
+    -------
+    react(e : Event)
+        To call in the event loop so that the widget react to the event
+    add_reaction(type : int, callback : (Widget, Event) -&gt; bool) -&gt; (int, int)
+        Add a callback to react to a certain type (`pygame.event.EventType`) of event
+        Use the returned value as an id for the callback so you can delete it
+    del_reaction(idReaction : (int, int))
+        Delete a callback with the id that was returned when you added it
+    disable()
+        Disable the widget so that it doesn&#39;t react to events anymore
+    enable()
+        Enable the widget to react to events
+
+    Abstract methods
+    ----------------
+    redraw()
+        Must change the `image` attribute to reflect the current state of the Widget
+
+    Attributes
+    ----------
+    container : Container
+        The `Frame` or `Window` or other subclass of Container that contains this Widget, or `None` if independent
+    &#34;&#34;&#34;
+
+    def __init__(self) -&gt; None:
+        super().__init__()
+        self._reactions = DefaultDict(list)
+        self.container = None
+        self._enabled = True
+
+    def react(self, event: Event):
+        &#34;&#34;&#34;Loops through the callbacks installed through `add_reaction` and call the appropriates one for the event type
+
+        Will do nothing if the widget was disabled.
+
+        Parameters
+        ----------
+        event : Event
+            The event which must be handled
+
+        Returns
+        -------
+        bool
+            Must the propagation of the event to containers be stopped ?
+        &#34;&#34;&#34;
+        if self._enabled:
+            stop_propagation = False
+            for reaction in self._reactions[event.type]:
+                stop = reaction(self, event)
+                stop_propagation = stop_propagation or stop
+            return stop_propagation
+
+    def add_reaction(self, type: int, callback) -&gt; Tuple[int, int]:
+        &#34;&#34;&#34;Add a callback to react to event of a certain type via `react`
+
+        Parameters
+        ----------
+        type : int
+            Type (`pygame.event.EventType`) of event the callback will be called for
+        callback : (Widget, Event) -&gt; bool
+            Function called with the Widget that called react() and the event, return True to stop the upward propagation of the event
+
+        Returns
+        -------
+        Tuple[int, int]
+            Identifiant that can be used to delete the callback later on
+        &#34;&#34;&#34;
+        reactions = self._reactions[type]
+        reactions.append(callback)
+        return (type, len(reactions) - 1)
+
+    def del_reaction(self, idReaction: Tuple[int, int]):
+        &#34;&#34;&#34;Delete a callback
+
+        Parameters
+        ----------
+        idReaction : Tuple[int, int]
+            The identifiant that was returned when the callback was added
+        &#34;&#34;&#34;
+        type, index = idReaction
+        del self._reactions[type][index]
+
+    def disable(self):
+        &#34;&#34;&#34;Disable the widget so that it doesn&#39;t react to events anymore&#34;&#34;&#34;
+        self._enabled = False
+
+    def enable(self):
+        &#34;&#34;&#34;Enable the widget to react to events&#34;&#34;&#34;
+        self._enabled = True
+
+    @abstractmethod
+    def redraw(self):
+        &#34;&#34;&#34;Redraw the image attribute to reflect the state of the Widget, normally implemented by a subclass and shouldn&#39;t have to be manually called
+
+        Raises
+        ------
+        NotImplementedError
+        &#34;&#34;&#34;
+        raise NotImplementedError(
+            &#34;A Widget subclass must implements the redraw() method&#34;
+        )
+
+
+class Container(Widget, ABC):
+    &#34;&#34;&#34;Abstract class for a Widget that can contain other widgets
+
+    Methods
+    -------
+    add_widget(w : Widget)
+        Add w to the container and change w.container
+    del_widget(w : Widget)
+        Delete the widget from the container and set w.container to None
+    &#34;&#34;&#34;
+
+    def __init__(self) -&gt; None:
+        super().__init__()
+        self._widgets = []
+
+    def kill(self) -&gt; None:
+        super().kill()
+        for w in self._widgets:
+            w.kill()
+
+    def react(self, event: Event):
+        stop_propagation = False
+        for w in self._widgets:
+            if isinstance(w, Widget):
+                stop = w.react(event)
+                stop_propagation = stop_propagation or stop
+        if not stop_propagation:
+            super().react(event)
+
+    def update(self, *args, **kwargs) -&gt; None:
+        for w in self._widgets:
+            w.update()
+        self.redraw()
+
+    def add_widget(self, w: Widget):
+        &#34;&#34;&#34;Add w to the container and change w.container
+
+        Parameters
+        ----------
+        w : Widget
+        &#34;&#34;&#34;
+        self._widgets.append(w)
+        if isinstance(w, Widget):
+            w.container = self
+
+    def del_widget(self, w: Widget):
+        &#34;&#34;&#34;Delete the widget from the container, set w.container to None and call w.kill()
+
+        Parameters
+        ----------
+        w : Widget
+        &#34;&#34;&#34;
+        self._widgets.remove(w)
+        if isinstance(w, Widget):
+            w.container = None
+
+    def disable(self):
+        for w in self._widgets:
+            if isinstance(w, Widget):
+                w.disable()
+        super().disable()
+
+    def enable(self):
+        for w in self._widgets:
+            if isinstance(w, Widget):
+                w.enable()
+        super().enable()
+
+
+class GridContainer(Container, ABC):
+    &#34;&#34;&#34;Abstract class for a container that place its widgets on a grid
+
+    Methods
+    -------
+    set_grid(col : int, line : int, w : Widget)
+        Put a Widget on the given position, extending the grid if necessary
+    get_grid(col : int, line : int) -&gt; Widget
+        Get the Widget in a certain position of the grid
+    del_cell(col : int, line : int) -&gt; Widget
+        Remove the Widget in the given position from the grid and from the container
+
+    Attributes
+    ----------
+    columns : int
+        Number of columns in the grid
+    lines : int
+        Number of lines in the grid
+    &#34;&#34;&#34;
+
+    def __init__(self) -&gt; None:
+        super().__init__()
+        self._grid = [[None]]
+        self._xdims = [0]
+        self._ydims = [0]
+        self._cells = [[Rect(0, 0, 0, 0)]]
+        self._columns = 1
+        self._lines = 1
+        self._grid_rect = Rect(0, 0, 0, 0)
+
+    def _compute_cells(self):
+        &#34;&#34;&#34;compute a matrix of rectangles corresponding to the grid and its dimensions&#34;&#34;&#34;
+        cells = [[None for x in range(self.columns)] for y in range(self.lines)]
+        y_offset = 0
+        for y in range(self.lines):
+            x_offset = 0
+            for x in range(self.columns):
+                cells[y][x] = Rect(x_offset, y_offset, self._xdims[x], self._ydims[y])
+                x_offset += self._xdims[x]
+            y_offset += self._ydims[y]
+        return cells
+
+    def _refresh_dims(self):
+        &#34;&#34;&#34;Refresh the _xdims, _ydims and _grid_rect attributes&#34;&#34;&#34;
+        self._xdims = [0] * self.columns
+        self._ydims = [0] * self.lines
+        for i in range(self._lines):
+            for j in range(self._columns):
+                w = self._grid[i][j]
+                if isinstance(w, Sprite):
+                    self._xdims[j] = max(self._xdims[j], w.rect.width)
+                    self._ydims[i] = max(self._ydims[i], w.rect.height)
+        self._grid_rect.width = sum(self._xdims)
+        self._grid_rect.height = sum(self._ydims)
+        self._cells = self._compute_cells()
+
+    def set_grid(self, col: int, line: int, w: Widget):
+        &#34;&#34;&#34;Put a Widget on the given position, extending the grid if necessary
+
+        Parameters
+        ----------
+        col : int
+            column where the Widget is placed
+        line : int
+            line where the widget is placed
+        w : Widget
+            Widget to place
+        &#34;&#34;&#34;
+        if col &gt; self._columns:
+            self.columns = col
+        if line &gt; self._lines:
+            self.lines = line
+        self._grid[line][col] = w
+        self.add_widget(w)
+
+        self._refresh_dims()
+
+    def get_grid(self, col: int, line: int) -&gt; Widget:
+        &#34;&#34;&#34;Get the Widget in a certain position of the grid
+
+        Parameters
+        ----------
+        col : int
+            column
+        line : int
+            line
+
+        Returns
+        -------
+        Widget
+            The Widget at the position col and line
+        &#34;&#34;&#34;
+        if col &gt; self._columns or line &gt; self._lines:
+            return
+        else:
+            return self._grid[line][col]
+
+    def del_cell(self, col: int, line: int) -&gt; Widget:
+        &#34;&#34;&#34;Remove the Widget in the given position from the grid and from the container
+
+        Parameters
+        ----------
+        col : int
+        line : int
+
+        Returns
+        -------
+        Widget
+            The widget that was removed
+        &#34;&#34;&#34;
+        w = None
+        if col &gt; self._columns or line &gt; self._lines:
+            return
+        else:
+            w = self._grid[line][col]
+            self._grid[line][col] = None
+            self.del_widget(w)
+
+        self._refresh_dims()
+        return w
+
+    def _get_lines(self):
+        return self._lines
+
+    def _set_lines(self, lines: int):
+        if lines &lt; 0:
+            raise ValueError(&#34;lines must be positive&#34;)
+        elif lines &lt; self._lines:
+            for line in range(lines, self._lines):
+                for w in self._grid[line]:
+                    if isinstance(w, Sprite):
+                        w.kill()
+            self._grid = self._grid[:lines]
+        elif lines &gt; self._lines:
+            for line in range(self.lines, lines):
+                self._grid.append([None for _ in range(self._columns)])
+
+        self._lines = lines
+        self._refresh_dims()
+
+    lines = property(
+        _get_lines,
+        _set_lines,
+        doc=&#34;Number of lines, setting it may destroy some lines of Widgets&#34;,
+    )
+
+    def _get_columns(self):
+        return self._columns
+
+    def _set_columns(self, columns: int):
+        if columns &lt; 0:
+            raise ValueError(&#34;columns must be positive&#34;)
+        elif columns &lt; self._columns:
+            for i, line in enumerate(self._grid):
+                for w in line[columns : self._columns]:
+                    if isinstance(w, Sprite):
+                        w.kill()
+                self._grid[i] = line[:columns]
+        elif columns &gt; self._columns:
+            for line in self._grid:
+                line.extend([None for _ in range(self._columns, columns)])
+
+        self._columns = columns
+        self._refresh_dims()
+
+    columns = property(
+        _get_columns,
+        _set_columns,
+        doc=&#34;Number of columns, setting it may destroy some columns of Widgets&#34;,
+    )
+
+
+class Button(Widget, ABC):
+    &#34;&#34;&#34;Abstract class for a Widget that can be &#34;clicked&#34; and can be in an &#34;active&#34;, &#34;inactive&#34; or &#34;disabled&#34; state
+
+    Custom event
+    -------------
+    Button.CLICKED
+        launched if the mouse has a left MOUSEBUTTONUP on this button,
+        contains a &#34;button&#34; attribute
+
+    Attributes
+    ----------
+    state : {Button.ACTIVE, Button.INACTIVE, Button.DISABLED}
+        State of the button
+    &#34;&#34;&#34;
+
+    CLICKED = custom_type()
+    INACTIVE = 0
+    ACTIVE = 1
+    DISABLED = 2
+
+    def _mouse_down(self, source, e):
+        if self.rect.collidepoint(e.pos):
+            self.state = Button.ACTIVE
+
+    def _mouse_up(self, source, e):
+        if self.state == Button.ACTIVE:
+            self.state = Button.INACTIVE
+        if self.rect.collidepoint(e.pos):
+            post(Event(Button.CLICKED, {&#34;button&#34;: self}))
+
+    def __init__(self, state: int = 0) -&gt; None:
+        super().__init__()
+        self._state = state
+        self._reactions[MOUSEBUTTONDOWN].append(self._mouse_down)
+        self._reactions[MOUSEBUTTONUP].append(self._mouse_up)
+
+    def react(self, e: Event):
+        return super().react(e)
+
+    def _get_state(self):
+        return self._state
+
+    def _set_state(self, state):
+        self._state = state
+        if state == Button.DISABLED:
+            self.disable()
+        else:
+            self.enable()
+        self.redraw()
+
+    state = property(
+        _get_state,
+        _set_state,
+        doc=&#34;State of the Button : INACTIVE (normal), ACTIVE (pressed) or DISABLED (unresponsive)&#34;,
+    )</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="wipyg.abstracts.Button"><code class="flex name class">
+<span>class <span class="ident">Button</span></span>
+<span>(</span><span>state: int = 0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract class for a Widget that can be "clicked" and can be in an "active", "inactive" or "disabled" state</p>
+<h2 id="custom-event">Custom Event</h2>
+<p>Button.CLICKED
+launched if the mouse has a left MOUSEBUTTONUP on this button,
+contains a "button" attribute</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>state</code></strong> :&ensp;<code>{Button.ACTIVE, Button.INACTIVE, Button.DISABLED}</code></dt>
+<dd>State of the button</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Button(Widget, ABC):
+    &#34;&#34;&#34;Abstract class for a Widget that can be &#34;clicked&#34; and can be in an &#34;active&#34;, &#34;inactive&#34; or &#34;disabled&#34; state
+
+    Custom event
+    -------------
+    Button.CLICKED
+        launched if the mouse has a left MOUSEBUTTONUP on this button,
+        contains a &#34;button&#34; attribute
+
+    Attributes
+    ----------
+    state : {Button.ACTIVE, Button.INACTIVE, Button.DISABLED}
+        State of the button
+    &#34;&#34;&#34;
+
+    CLICKED = custom_type()
+    INACTIVE = 0
+    ACTIVE = 1
+    DISABLED = 2
+
+    def _mouse_down(self, source, e):
+        if self.rect.collidepoint(e.pos):
+            self.state = Button.ACTIVE
+
+    def _mouse_up(self, source, e):
+        if self.state == Button.ACTIVE:
+            self.state = Button.INACTIVE
+        if self.rect.collidepoint(e.pos):
+            post(Event(Button.CLICKED, {&#34;button&#34;: self}))
+
+    def __init__(self, state: int = 0) -&gt; None:
+        super().__init__()
+        self._state = state
+        self._reactions[MOUSEBUTTONDOWN].append(self._mouse_down)
+        self._reactions[MOUSEBUTTONUP].append(self._mouse_up)
+
+    def react(self, e: Event):
+        return super().react(e)
+
+    def _get_state(self):
+        return self._state
+
+    def _set_state(self, state):
+        self._state = state
+        if state == Button.DISABLED:
+            self.disable()
+        else:
+            self.enable()
+        self.redraw()
+
+    state = property(
+        _get_state,
+        _set_state,
+        doc=&#34;State of the Button : INACTIVE (normal), ACTIVE (pressed) or DISABLED (unresponsive)&#34;,
+    )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="wipyg.buttons.IconButton" href="buttons.html#wipyg.buttons.IconButton">IconButton</a></li>
+<li><a title="wipyg.buttons.PlainButton" href="buttons.html#wipyg.buttons.PlainButton">PlainButton</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="wipyg.abstracts.Button.ACTIVE"><code class="name">var <span class="ident">ACTIVE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="wipyg.abstracts.Button.CLICKED"><code class="name">var <span class="ident">CLICKED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="wipyg.abstracts.Button.DISABLED"><code class="name">var <span class="ident">DISABLED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="wipyg.abstracts.Button.INACTIVE"><code class="name">var <span class="ident">INACTIVE</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="wipyg.abstracts.Button.state"><code class="name">var <span class="ident">state</span></code></dt>
+<dd>
+<div class="desc"><p>State of the Button : INACTIVE (normal), ACTIVE (pressed) or DISABLED (unresponsive)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def _get_state(self):
+    return self._state</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.abstracts.Widget.add_reaction" href="#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.del_reaction" href="#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.disable" href="#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.enable" href="#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.react" href="#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.redraw" href="#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="wipyg.abstracts.Container"><code class="flex name class">
+<span>class <span class="ident">Container</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract class for a Widget that can contain other widgets</p>
+<h2 id="methods">Methods</h2>
+<p>add_widget(w : Widget)
+Add w to the container and change w.container
+del_widget(w : Widget)
+Delete the widget from the container and set w.container to None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Container(Widget, ABC):
+    &#34;&#34;&#34;Abstract class for a Widget that can contain other widgets
+
+    Methods
+    -------
+    add_widget(w : Widget)
+        Add w to the container and change w.container
+    del_widget(w : Widget)
+        Delete the widget from the container and set w.container to None
+    &#34;&#34;&#34;
+
+    def __init__(self) -&gt; None:
+        super().__init__()
+        self._widgets = []
+
+    def kill(self) -&gt; None:
+        super().kill()
+        for w in self._widgets:
+            w.kill()
+
+    def react(self, event: Event):
+        stop_propagation = False
+        for w in self._widgets:
+            if isinstance(w, Widget):
+                stop = w.react(event)
+                stop_propagation = stop_propagation or stop
+        if not stop_propagation:
+            super().react(event)
+
+    def update(self, *args, **kwargs) -&gt; None:
+        for w in self._widgets:
+            w.update()
+        self.redraw()
+
+    def add_widget(self, w: Widget):
+        &#34;&#34;&#34;Add w to the container and change w.container
+
+        Parameters
+        ----------
+        w : Widget
+        &#34;&#34;&#34;
+        self._widgets.append(w)
+        if isinstance(w, Widget):
+            w.container = self
+
+    def del_widget(self, w: Widget):
+        &#34;&#34;&#34;Delete the widget from the container, set w.container to None and call w.kill()
+
+        Parameters
+        ----------
+        w : Widget
+        &#34;&#34;&#34;
+        self._widgets.remove(w)
+        if isinstance(w, Widget):
+            w.container = None
+
+    def disable(self):
+        for w in self._widgets:
+            if isinstance(w, Widget):
+                w.disable()
+        super().disable()
+
+    def enable(self):
+        for w in self._widgets:
+            if isinstance(w, Widget):
+                w.enable()
+        super().enable()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.GridContainer" href="#wipyg.abstracts.GridContainer">GridContainer</a></li>
+<li><a title="wipyg.containers.Window" href="containers.html#wipyg.containers.Window">Window</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="wipyg.abstracts.Container.add_widget"><code class="name flex">
+<span>def <span class="ident">add_widget</span></span>(<span>self, w: <a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add w to the container and change w.container</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>w</code></strong> :&ensp;<code><a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_widget(self, w: Widget):
+    &#34;&#34;&#34;Add w to the container and change w.container
+
+    Parameters
+    ----------
+    w : Widget
+    &#34;&#34;&#34;
+    self._widgets.append(w)
+    if isinstance(w, Widget):
+        w.container = self</code></pre>
+</details>
+</dd>
+<dt id="wipyg.abstracts.Container.del_widget"><code class="name flex">
+<span>def <span class="ident">del_widget</span></span>(<span>self, w: <a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Delete the widget from the container, set w.container to None and call w.kill()</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>w</code></strong> :&ensp;<code><a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def del_widget(self, w: Widget):
+    &#34;&#34;&#34;Delete the widget from the container, set w.container to None and call w.kill()
+
+    Parameters
+    ----------
+    w : Widget
+    &#34;&#34;&#34;
+    self._widgets.remove(w)
+    if isinstance(w, Widget):
+        w.container = None</code></pre>
+</details>
+</dd>
+<dt id="wipyg.abstracts.Container.kill"><code class="name flex">
+<span>def <span class="ident">kill</span></span>(<span>self) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>remove the Sprite from all Groups</p>
+<p>Sprite.kill(): return None</p>
+<p>The Sprite is removed from all the Groups that contain it. This won't
+change anything about the state of the Sprite. It is possible to
+continue to use the Sprite after this method has been called, including
+adding it to Groups.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def kill(self) -&gt; None:
+    super().kill()
+    for w in self._widgets:
+        w.kill()</code></pre>
+</details>
+</dd>
+<dt id="wipyg.abstracts.Container.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>self, *args, **kwargs) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>method to control sprite behavior</p>
+<p>Sprite.update(<em>args, </em>*kwargs):</p>
+<p>The default implementation of this method does nothing; it's just a
+convenient "hook" that you can override. This method is called by
+Group.update() with whatever arguments you give it.</p>
+<p>There is no need to use this method if not using the convenience
+method by the same name in the Group class.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update(self, *args, **kwargs) -&gt; None:
+    for w in self._widgets:
+        w.update()
+    self.redraw()</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.abstracts.Widget.add_reaction" href="#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.del_reaction" href="#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.disable" href="#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.enable" href="#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.react" href="#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.redraw" href="#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="wipyg.abstracts.GridContainer"><code class="flex name class">
+<span>class <span class="ident">GridContainer</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract class for a container that place its widgets on a grid</p>
+<h2 id="methods">Methods</h2>
+<p>set_grid(col : int, line : int, w : Widget)
+Put a Widget on the given position, extending the grid if necessary
+get_grid(col : int, line : int) -&gt; Widget
+Get the Widget in a certain position of the grid
+del_cell(col : int, line : int) -&gt; Widget
+Remove the Widget in the given position from the grid and from the container</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>columns</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of columns in the grid</dd>
+<dt><strong><code>lines</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of lines in the grid</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class GridContainer(Container, ABC):
+    &#34;&#34;&#34;Abstract class for a container that place its widgets on a grid
+
+    Methods
+    -------
+    set_grid(col : int, line : int, w : Widget)
+        Put a Widget on the given position, extending the grid if necessary
+    get_grid(col : int, line : int) -&gt; Widget
+        Get the Widget in a certain position of the grid
+    del_cell(col : int, line : int) -&gt; Widget
+        Remove the Widget in the given position from the grid and from the container
+
+    Attributes
+    ----------
+    columns : int
+        Number of columns in the grid
+    lines : int
+        Number of lines in the grid
+    &#34;&#34;&#34;
+
+    def __init__(self) -&gt; None:
+        super().__init__()
+        self._grid = [[None]]
+        self._xdims = [0]
+        self._ydims = [0]
+        self._cells = [[Rect(0, 0, 0, 0)]]
+        self._columns = 1
+        self._lines = 1
+        self._grid_rect = Rect(0, 0, 0, 0)
+
+    def _compute_cells(self):
+        &#34;&#34;&#34;compute a matrix of rectangles corresponding to the grid and its dimensions&#34;&#34;&#34;
+        cells = [[None for x in range(self.columns)] for y in range(self.lines)]
+        y_offset = 0
+        for y in range(self.lines):
+            x_offset = 0
+            for x in range(self.columns):
+                cells[y][x] = Rect(x_offset, y_offset, self._xdims[x], self._ydims[y])
+                x_offset += self._xdims[x]
+            y_offset += self._ydims[y]
+        return cells
+
+    def _refresh_dims(self):
+        &#34;&#34;&#34;Refresh the _xdims, _ydims and _grid_rect attributes&#34;&#34;&#34;
+        self._xdims = [0] * self.columns
+        self._ydims = [0] * self.lines
+        for i in range(self._lines):
+            for j in range(self._columns):
+                w = self._grid[i][j]
+                if isinstance(w, Sprite):
+                    self._xdims[j] = max(self._xdims[j], w.rect.width)
+                    self._ydims[i] = max(self._ydims[i], w.rect.height)
+        self._grid_rect.width = sum(self._xdims)
+        self._grid_rect.height = sum(self._ydims)
+        self._cells = self._compute_cells()
+
+    def set_grid(self, col: int, line: int, w: Widget):
+        &#34;&#34;&#34;Put a Widget on the given position, extending the grid if necessary
+
+        Parameters
+        ----------
+        col : int
+            column where the Widget is placed
+        line : int
+            line where the widget is placed
+        w : Widget
+            Widget to place
+        &#34;&#34;&#34;
+        if col &gt; self._columns:
+            self.columns = col
+        if line &gt; self._lines:
+            self.lines = line
+        self._grid[line][col] = w
+        self.add_widget(w)
+
+        self._refresh_dims()
+
+    def get_grid(self, col: int, line: int) -&gt; Widget:
+        &#34;&#34;&#34;Get the Widget in a certain position of the grid
+
+        Parameters
+        ----------
+        col : int
+            column
+        line : int
+            line
+
+        Returns
+        -------
+        Widget
+            The Widget at the position col and line
+        &#34;&#34;&#34;
+        if col &gt; self._columns or line &gt; self._lines:
+            return
+        else:
+            return self._grid[line][col]
+
+    def del_cell(self, col: int, line: int) -&gt; Widget:
+        &#34;&#34;&#34;Remove the Widget in the given position from the grid and from the container
+
+        Parameters
+        ----------
+        col : int
+        line : int
+
+        Returns
+        -------
+        Widget
+            The widget that was removed
+        &#34;&#34;&#34;
+        w = None
+        if col &gt; self._columns or line &gt; self._lines:
+            return
+        else:
+            w = self._grid[line][col]
+            self._grid[line][col] = None
+            self.del_widget(w)
+
+        self._refresh_dims()
+        return w
+
+    def _get_lines(self):
+        return self._lines
+
+    def _set_lines(self, lines: int):
+        if lines &lt; 0:
+            raise ValueError(&#34;lines must be positive&#34;)
+        elif lines &lt; self._lines:
+            for line in range(lines, self._lines):
+                for w in self._grid[line]:
+                    if isinstance(w, Sprite):
+                        w.kill()
+            self._grid = self._grid[:lines]
+        elif lines &gt; self._lines:
+            for line in range(self.lines, lines):
+                self._grid.append([None for _ in range(self._columns)])
+
+        self._lines = lines
+        self._refresh_dims()
+
+    lines = property(
+        _get_lines,
+        _set_lines,
+        doc=&#34;Number of lines, setting it may destroy some lines of Widgets&#34;,
+    )
+
+    def _get_columns(self):
+        return self._columns
+
+    def _set_columns(self, columns: int):
+        if columns &lt; 0:
+            raise ValueError(&#34;columns must be positive&#34;)
+        elif columns &lt; self._columns:
+            for i, line in enumerate(self._grid):
+                for w in line[columns : self._columns]:
+                    if isinstance(w, Sprite):
+                        w.kill()
+                self._grid[i] = line[:columns]
+        elif columns &gt; self._columns:
+            for line in self._grid:
+                line.extend([None for _ in range(self._columns, columns)])
+
+        self._columns = columns
+        self._refresh_dims()
+
+    columns = property(
+        _get_columns,
+        _set_columns,
+        doc=&#34;Number of columns, setting it may destroy some columns of Widgets&#34;,
+    )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.Container" href="#wipyg.abstracts.Container">Container</a></li>
+<li><a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="wipyg.containers.Frame" href="containers.html#wipyg.containers.Frame">Frame</a></li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="wipyg.abstracts.GridContainer.columns"><code class="name">var <span class="ident">columns</span></code></dt>
+<dd>
+<div class="desc"><p>Number of columns, setting it may destroy some columns of Widgets</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def _get_columns(self):
+    return self._columns</code></pre>
+</details>
+</dd>
+<dt id="wipyg.abstracts.GridContainer.lines"><code class="name">var <span class="ident">lines</span></code></dt>
+<dd>
+<div class="desc"><p>Number of lines, setting it may destroy some lines of Widgets</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def _get_lines(self):
+    return self._lines</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="wipyg.abstracts.GridContainer.del_cell"><code class="name flex">
+<span>def <span class="ident">del_cell</span></span>(<span>self, col: int, line: int) ‑> <a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Remove the Widget in the given position from the grid and from the container</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>col</code></strong> :&ensp;<code>int</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>line</code></strong> :&ensp;<code>int</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></code></dt>
+<dd>The widget that was removed</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def del_cell(self, col: int, line: int) -&gt; Widget:
+    &#34;&#34;&#34;Remove the Widget in the given position from the grid and from the container
+
+    Parameters
+    ----------
+    col : int
+    line : int
+
+    Returns
+    -------
+    Widget
+        The widget that was removed
+    &#34;&#34;&#34;
+    w = None
+    if col &gt; self._columns or line &gt; self._lines:
+        return
+    else:
+        w = self._grid[line][col]
+        self._grid[line][col] = None
+        self.del_widget(w)
+
+    self._refresh_dims()
+    return w</code></pre>
+</details>
+</dd>
+<dt id="wipyg.abstracts.GridContainer.get_grid"><code class="name flex">
+<span>def <span class="ident">get_grid</span></span>(<span>self, col: int, line: int) ‑> <a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get the Widget in a certain position of the grid</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>col</code></strong> :&ensp;<code>int</code></dt>
+<dd>column</dd>
+<dt><strong><code>line</code></strong> :&ensp;<code>int</code></dt>
+<dd>line</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></code></dt>
+<dd>The Widget at the position col and line</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_grid(self, col: int, line: int) -&gt; Widget:
+    &#34;&#34;&#34;Get the Widget in a certain position of the grid
+
+    Parameters
+    ----------
+    col : int
+        column
+    line : int
+        line
+
+    Returns
+    -------
+    Widget
+        The Widget at the position col and line
+    &#34;&#34;&#34;
+    if col &gt; self._columns or line &gt; self._lines:
+        return
+    else:
+        return self._grid[line][col]</code></pre>
+</details>
+</dd>
+<dt id="wipyg.abstracts.GridContainer.set_grid"><code class="name flex">
+<span>def <span class="ident">set_grid</span></span>(<span>self, col: int, line: int, w: <a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Put a Widget on the given position, extending the grid if necessary</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>col</code></strong> :&ensp;<code>int</code></dt>
+<dd>column where the Widget is placed</dd>
+<dt><strong><code>line</code></strong> :&ensp;<code>int</code></dt>
+<dd>line where the widget is placed</dd>
+<dt><strong><code>w</code></strong> :&ensp;<code><a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></code></dt>
+<dd>Widget to place</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_grid(self, col: int, line: int, w: Widget):
+    &#34;&#34;&#34;Put a Widget on the given position, extending the grid if necessary
+
+    Parameters
+    ----------
+    col : int
+        column where the Widget is placed
+    line : int
+        line where the widget is placed
+    w : Widget
+        Widget to place
+    &#34;&#34;&#34;
+    if col &gt; self._columns:
+        self.columns = col
+    if line &gt; self._lines:
+        self.lines = line
+    self._grid[line][col] = w
+    self.add_widget(w)
+
+    self._refresh_dims()</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.abstracts.Container" href="#wipyg.abstracts.Container">Container</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.abstracts.Container.add_reaction" href="#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.add_widget" href="#wipyg.abstracts.Container.add_widget">add_widget</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.del_reaction" href="#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.del_widget" href="#wipyg.abstracts.Container.del_widget">del_widget</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.disable" href="#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.enable" href="#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.kill" href="#wipyg.abstracts.Container.kill">kill</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.react" href="#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.redraw" href="#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.update" href="#wipyg.abstracts.Container.update">update</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="wipyg.abstracts.Widget"><code class="flex name class">
+<span>class <span class="ident">Widget</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract class for widgets, extends Sprite</p>
+<h2 id="methods">Methods</h2>
+<p>react(e : Event)
+To call in the event loop so that the widget react to the event
+add_reaction(type : int, callback : (Widget, Event) -&gt; bool) -&gt; (int, int)
+Add a callback to react to a certain type (<code>pygame.event.EventType</code>) of event
+Use the returned value as an id for the callback so you can delete it
+del_reaction(idReaction : (int, int))
+Delete a callback with the id that was returned when you added it
+disable()
+Disable the widget so that it doesn't react to events anymore
+enable()
+Enable the widget to react to events</p>
+<h2 id="abstract-methods">Abstract Methods</h2>
+<p>redraw()
+Must change the <code>image</code> attribute to reflect the current state of the Widget</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>container</code></strong> :&ensp;<code><a title="wipyg.abstracts.Container" href="#wipyg.abstracts.Container">Container</a></code></dt>
+<dd>The <code>Frame</code> or <code>Window</code> or other subclass of Container that contains this Widget, or <code>None</code> if independent</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Widget(Sprite, ABC):
+    &#34;&#34;&#34;Abstract class for widgets, extends Sprite
+
+    Methods
+    -------
+    react(e : Event)
+        To call in the event loop so that the widget react to the event
+    add_reaction(type : int, callback : (Widget, Event) -&gt; bool) -&gt; (int, int)
+        Add a callback to react to a certain type (`pygame.event.EventType`) of event
+        Use the returned value as an id for the callback so you can delete it
+    del_reaction(idReaction : (int, int))
+        Delete a callback with the id that was returned when you added it
+    disable()
+        Disable the widget so that it doesn&#39;t react to events anymore
+    enable()
+        Enable the widget to react to events
+
+    Abstract methods
+    ----------------
+    redraw()
+        Must change the `image` attribute to reflect the current state of the Widget
+
+    Attributes
+    ----------
+    container : Container
+        The `Frame` or `Window` or other subclass of Container that contains this Widget, or `None` if independent
+    &#34;&#34;&#34;
+
+    def __init__(self) -&gt; None:
+        super().__init__()
+        self._reactions = DefaultDict(list)
+        self.container = None
+        self._enabled = True
+
+    def react(self, event: Event):
+        &#34;&#34;&#34;Loops through the callbacks installed through `add_reaction` and call the appropriates one for the event type
+
+        Will do nothing if the widget was disabled.
+
+        Parameters
+        ----------
+        event : Event
+            The event which must be handled
+
+        Returns
+        -------
+        bool
+            Must the propagation of the event to containers be stopped ?
+        &#34;&#34;&#34;
+        if self._enabled:
+            stop_propagation = False
+            for reaction in self._reactions[event.type]:
+                stop = reaction(self, event)
+                stop_propagation = stop_propagation or stop
+            return stop_propagation
+
+    def add_reaction(self, type: int, callback) -&gt; Tuple[int, int]:
+        &#34;&#34;&#34;Add a callback to react to event of a certain type via `react`
+
+        Parameters
+        ----------
+        type : int
+            Type (`pygame.event.EventType`) of event the callback will be called for
+        callback : (Widget, Event) -&gt; bool
+            Function called with the Widget that called react() and the event, return True to stop the upward propagation of the event
+
+        Returns
+        -------
+        Tuple[int, int]
+            Identifiant that can be used to delete the callback later on
+        &#34;&#34;&#34;
+        reactions = self._reactions[type]
+        reactions.append(callback)
+        return (type, len(reactions) - 1)
+
+    def del_reaction(self, idReaction: Tuple[int, int]):
+        &#34;&#34;&#34;Delete a callback
+
+        Parameters
+        ----------
+        idReaction : Tuple[int, int]
+            The identifiant that was returned when the callback was added
+        &#34;&#34;&#34;
+        type, index = idReaction
+        del self._reactions[type][index]
+
+    def disable(self):
+        &#34;&#34;&#34;Disable the widget so that it doesn&#39;t react to events anymore&#34;&#34;&#34;
+        self._enabled = False
+
+    def enable(self):
+        &#34;&#34;&#34;Enable the widget to react to events&#34;&#34;&#34;
+        self._enabled = True
+
+    @abstractmethod
+    def redraw(self):
+        &#34;&#34;&#34;Redraw the image attribute to reflect the state of the Widget, normally implemented by a subclass and shouldn&#39;t have to be manually called
+
+        Raises
+        ------
+        NotImplementedError
+        &#34;&#34;&#34;
+        raise NotImplementedError(
+            &#34;A Widget subclass must implements the redraw() method&#34;
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.Button" href="#wipyg.abstracts.Button">Button</a></li>
+<li><a title="wipyg.abstracts.Container" href="#wipyg.abstracts.Container">Container</a></li>
+<li><a title="wipyg.entry.Entry" href="entry.html#wipyg.entry.Entry">Entry</a></li>
+<li><a title="wipyg.label.Label" href="label.html#wipyg.label.Label">Label</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="wipyg.abstracts.Widget.add_reaction"><code class="name flex">
+<span>def <span class="ident">add_reaction</span></span>(<span>self, type: int, callback) ‑> Tuple[int, int]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add a callback to react to event of a certain type via <code>react</code></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>type</code></strong> :&ensp;<code>int</code></dt>
+<dd>Type (<code>pygame.event.EventType</code>) of event the callback will be called for</dd>
+<dt><strong><code>callback</code></strong> :&ensp;<code>(Widget, Event) -&gt; bool</code></dt>
+<dd>Function called with the Widget that called react() and the event, return True to stop the upward propagation of the event</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>Tuple[int, int]</code></dt>
+<dd>Identifiant that can be used to delete the callback later on</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_reaction(self, type: int, callback) -&gt; Tuple[int, int]:
+    &#34;&#34;&#34;Add a callback to react to event of a certain type via `react`
+
+    Parameters
+    ----------
+    type : int
+        Type (`pygame.event.EventType`) of event the callback will be called for
+    callback : (Widget, Event) -&gt; bool
+        Function called with the Widget that called react() and the event, return True to stop the upward propagation of the event
+
+    Returns
+    -------
+    Tuple[int, int]
+        Identifiant that can be used to delete the callback later on
+    &#34;&#34;&#34;
+    reactions = self._reactions[type]
+    reactions.append(callback)
+    return (type, len(reactions) - 1)</code></pre>
+</details>
+</dd>
+<dt id="wipyg.abstracts.Widget.del_reaction"><code class="name flex">
+<span>def <span class="ident">del_reaction</span></span>(<span>self, idReaction: Tuple[int, int])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Delete a callback</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>idReaction</code></strong> :&ensp;<code>Tuple[int, int]</code></dt>
+<dd>The identifiant that was returned when the callback was added</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def del_reaction(self, idReaction: Tuple[int, int]):
+    &#34;&#34;&#34;Delete a callback
+
+    Parameters
+    ----------
+    idReaction : Tuple[int, int]
+        The identifiant that was returned when the callback was added
+    &#34;&#34;&#34;
+    type, index = idReaction
+    del self._reactions[type][index]</code></pre>
+</details>
+</dd>
+<dt id="wipyg.abstracts.Widget.disable"><code class="name flex">
+<span>def <span class="ident">disable</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Disable the widget so that it doesn't react to events anymore</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def disable(self):
+    &#34;&#34;&#34;Disable the widget so that it doesn&#39;t react to events anymore&#34;&#34;&#34;
+    self._enabled = False</code></pre>
+</details>
+</dd>
+<dt id="wipyg.abstracts.Widget.enable"><code class="name flex">
+<span>def <span class="ident">enable</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Enable the widget to react to events</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def enable(self):
+    &#34;&#34;&#34;Enable the widget to react to events&#34;&#34;&#34;
+    self._enabled = True</code></pre>
+</details>
+</dd>
+<dt id="wipyg.abstracts.Widget.react"><code class="name flex">
+<span>def <span class="ident">react</span></span>(<span>self, event: <built-in function Event>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Loops through the callbacks installed through <code>add_reaction</code> and call the appropriates one for the event type</p>
+<p>Will do nothing if the widget was disabled.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>event</code></strong> :&ensp;<code>Event</code></dt>
+<dd>The event which must be handled</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>Must the propagation of the event to containers be stopped ?</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def react(self, event: Event):
+    &#34;&#34;&#34;Loops through the callbacks installed through `add_reaction` and call the appropriates one for the event type
+
+    Will do nothing if the widget was disabled.
+
+    Parameters
+    ----------
+    event : Event
+        The event which must be handled
+
+    Returns
+    -------
+    bool
+        Must the propagation of the event to containers be stopped ?
+    &#34;&#34;&#34;
+    if self._enabled:
+        stop_propagation = False
+        for reaction in self._reactions[event.type]:
+            stop = reaction(self, event)
+            stop_propagation = stop_propagation or stop
+        return stop_propagation</code></pre>
+</details>
+</dd>
+<dt id="wipyg.abstracts.Widget.redraw"><code class="name flex">
+<span>def <span class="ident">redraw</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Redraw the image attribute to reflect the state of the Widget, normally implemented by a subclass and shouldn't have to be manually called</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>NotImplementedError</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@abstractmethod
+def redraw(self):
+    &#34;&#34;&#34;Redraw the image attribute to reflect the state of the Widget, normally implemented by a subclass and shouldn&#39;t have to be manually called
+
+    Raises
+    ------
+    NotImplementedError
+    &#34;&#34;&#34;
+    raise NotImplementedError(
+        &#34;A Widget subclass must implements the redraw() method&#34;
+    )</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="wipyg" href="index.html">wipyg</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="wipyg.abstracts.Button" href="#wipyg.abstracts.Button">Button</a></code></h4>
+<ul class="">
+<li><code><a title="wipyg.abstracts.Button.ACTIVE" href="#wipyg.abstracts.Button.ACTIVE">ACTIVE</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.CLICKED" href="#wipyg.abstracts.Button.CLICKED">CLICKED</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.DISABLED" href="#wipyg.abstracts.Button.DISABLED">DISABLED</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.INACTIVE" href="#wipyg.abstracts.Button.INACTIVE">INACTIVE</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.state" href="#wipyg.abstracts.Button.state">state</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="wipyg.abstracts.Container" href="#wipyg.abstracts.Container">Container</a></code></h4>
+<ul class="">
+<li><code><a title="wipyg.abstracts.Container.add_widget" href="#wipyg.abstracts.Container.add_widget">add_widget</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.del_widget" href="#wipyg.abstracts.Container.del_widget">del_widget</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.kill" href="#wipyg.abstracts.Container.kill">kill</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.update" href="#wipyg.abstracts.Container.update">update</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="wipyg.abstracts.GridContainer" href="#wipyg.abstracts.GridContainer">GridContainer</a></code></h4>
+<ul class="">
+<li><code><a title="wipyg.abstracts.GridContainer.columns" href="#wipyg.abstracts.GridContainer.columns">columns</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.del_cell" href="#wipyg.abstracts.GridContainer.del_cell">del_cell</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.get_grid" href="#wipyg.abstracts.GridContainer.get_grid">get_grid</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.lines" href="#wipyg.abstracts.GridContainer.lines">lines</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.set_grid" href="#wipyg.abstracts.GridContainer.set_grid">set_grid</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="wipyg.abstracts.Widget" href="#wipyg.abstracts.Widget">Widget</a></code></h4>
+<ul class="two-column">
+<li><code><a title="wipyg.abstracts.Widget.add_reaction" href="#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.del_reaction" href="#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.disable" href="#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.enable" href="#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.react" href="#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.redraw" href="#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

@@ -17,7 +17,7 @@ class Widget(Sprite, ABC):
     react(e : Event)
         To call in the event loop so that the widget react to the event
     add_reaction(type : int, callback : (Widget, Event) -> bool) -> (int, int)
-        Add a callback to react to a certain type (pygame.event.EventType) of event
+        Add a callback to react to a certain type (`pygame.event.EventType`) of event
         Use the returned value as an id for the callback so you can delete it
     del_reaction(idReaction : (int, int))
         Delete a callback with the id that was returned when you added it
@@ -29,12 +29,12 @@ class Widget(Sprite, ABC):
     Abstract methods
     ----------------
     redraw()
-        Must change the image attribute to reflect the current state of the Widget
+        Must change the `image` attribute to reflect the current state of the Widget
 
     Attributes
     ----------
     container : Container
-        The Frame or Window or other subclass of Container that contains this Widget, or None if independent
+        The `Frame` or `Window` or other subclass of Container that contains this Widget, or `None` if independent
     """
 
     def __init__(self) -> None:
@@ -44,7 +44,9 @@ class Widget(Sprite, ABC):
         self._enabled = True
 
     def react(self, event: Event):
-        """Loop through the callbacks installed through add_reaction and call the appropriates one for the event type
+        """Loops through the callbacks installed through `add_reaction` and call the appropriates one for the event type
+
+        Will do nothing if the widget was disabled.
 
         Parameters
         ----------
@@ -64,12 +66,12 @@ class Widget(Sprite, ABC):
             return stop_propagation
 
     def add_reaction(self, type: int, callback) -> Tuple[int, int]:
-        """Add a callback to react to event of a certain type via react
+        """Add a callback to react to event of a certain type via `react`
 
         Parameters
         ----------
         type : int
-            Type (pygame.event.EventType) of event the callback will be called for
+            Type (`pygame.event.EventType`) of event the callback will be called for
         callback : (Widget, Event) -> bool
             Function called with the Widget that called react() and the event, return True to stop the upward propagation of the event
 

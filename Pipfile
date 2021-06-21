@@ -8,3 +8,6 @@ pygame = "*"
 
 [dev-packages]
 pipenv = "*"
+sphinx = "*"
+numpydoc = "*"
+pdoc3 = "*"

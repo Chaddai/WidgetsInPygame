@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>wipyg.entry API documentation</title>
+<meta name="description" content="Provide the text Entry widget type." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>wipyg.entry</code></h1>
+</header>
+<section id="section-intro">
+<p>Provide the text Entry widget type.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># -*- coding: utf-8 -*-
+&#34;&#34;&#34;Provide the text Entry widget type.&#34;&#34;&#34;
+
+from wipyg.abstracts import *
+from pygame.font import Font
+from pygame import Surface
+from pygame.draw import *
+from pygame.time import get_ticks
+import unicodedata
+
+
+class Entry(Widget):
+    &#34;&#34;&#34;A text entry Widget
+
+    Attributes
+    ----------
+    value : str
+        the text displayed and edited
+    cursor : int
+        how many letter before the displayed cursor
+    state : int
+        state of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED)
+
+    Custom event
+    -------------
+    Entry.SUBMIT
+        launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
+        contains a &#34;value&#34; attribute of type str
+    &#34;&#34;&#34;
+
+    # Class constants
+    SUBMIT = custom_type()
+    SELECTED = 0
+    DESELECTED = 1
+    DISABLED = 2
+
+    def __init__(
+        self,
+        value: str = &#34;&#34;,
+        font=None,
+        size: int = 30,
+        length: int = 40,
+        state: int = 1,
+    ):
+        &#34;&#34;&#34;
+        Parameters
+        ----------
+        value : str
+            Initial text in the Entry
+        font : file | str (filename)
+            Font to use for the Entry
+        size : int
+            Font size
+        length : int
+            How many character long can the Entry take
+        state : int
+            State of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED), DESELECTED by default
+
+        Raises
+        ------
+        ValueError
+            If the initial value is longer than length
+        &#34;&#34;&#34;
+        if len(value) &gt; length:
+            raise ValueError(&#34;value can&#39;t be longer than the length of the Entry&#34;)
+        super().__init__()
+        self._length = length
+        self._font = Font(font, size)
+        self._value = list(value)
+        self._cursor = len(value)
+        self._state = state
+        self._first_blink = get_ticks()
+        self.rect = Rect(0, 0, 0, 0)
+        self.redraw()
+
+        self.add_reaction(KEYDOWN, self._press_key)
+        self.add_reaction(MOUSEBUTTONUP, self._select)
+
+    def redraw(self):
+        if self._state == Entry.DISABLED:
+            bg_color = (200, 200, 200)
+            text_color = (100, 100, 100)
+        else:
+            bg_color = (255, 255, 255)
+            text_color = (0, 0, 0)
+
+        pos = self.rect.topleft
+
+        xsize, ysize = self._font.size(&#34;M&#34; * self._length)
+        padding = self._font.get_height()
+        self.rect = Rect(0, 0, xsize + 2 * padding, ysize + 2 * padding)
+
+        value_img = self._font.render(self.value, True, text_color)
+        value_rect = value_img.get_rect(centery=self.rect.centery, left=padding)
+
+        self.image = Surface(self.rect.size, SRCALPHA)
+        self.image.fill((255, 255, 255, 0))
+        border = self.rect.inflate(-2, -2)
+        border.center = self.rect.center
+        rect(self.image, bg_color, border, border_radius=4)
+        rect(self.image, (0, 0, 0), border, width=1, border_radius=4)
+
+        if self._state == Entry.SELECTED:
+            now = get_ticks()
+            if ((now - self._first_blink) // 500) % 2:
+                xcursor = padding + self._font.size(self.value[: self._cursor])[0]
+                cursor_rect = Rect(xcursor, padding, 2, padding)
+                rect(self.image, (0, 0, 0), cursor_rect)
+
+        self.image.blit(value_img, value_rect)
+
+        # reposition the rect as initially
+        self.rect.topleft = pos
+
+    def update(self, *args, **kwargs) -&gt; None:
+        self.redraw()
+
+    def _press_key(self, _, e):
+        letter = e.unicode
+        if self._state == Entry.SELECTED:
+            if e.key == K_LEFT and self._cursor &gt; 0:
+                self._cursor -= 1
+            elif e.key == K_RIGHT and self._cursor &lt; len(self._value):
+                self._cursor += 1
+            elif e.key == K_BACKSPACE and self._cursor &gt; 0:
+                self._cursor -= 1
+                del self._value[self._cursor]
+            elif e.key == K_DELETE and self._cursor &lt; len(self._value):
+                del self._value[self._cursor]
+            elif e.key == K_END:
+                self._cursor = len(self._value)
+            elif e.key == K_HOME:
+                self._cursor = 0
+            elif e.key == K_KP_ENTER or e.key == K_RETURN:
+                self.state = Entry.DESELECTED
+                post(Event(Entry.SUBMIT, dict={&#34;value&#34;: self.value}))
+            elif (
+                letter != &#34;&#34;
+                # don&#39;t react to Control characters
+                and not unicodedata.category(letter).startswith(&#34;C&#34;)
+                and len(self._value) &lt; self._length
+            ):
+                self._value.insert(self._cursor, letter)
+                self._cursor += 1
+
+    def _select(self, _, e):
+        # move the cursor as close as possible to the click (if it is in the Entry)
+        if self.rect.collidepoint(e.pos):
+            padding = self._font.get_height()
+            xletters = [
+                self.rect.left + padding + self._font.size(self.value[:j])[0]
+                for j in range(len(self._value) + 1)
+            ]
+            closest = min(
+                range(len(self._value) + 1), key=lambda i: abs(e.pos[0] - xletters[i])
+            )
+            self._cursor = closest
+
+        # toggle SELECTED and DESELECTED state depending on where the user clicked
+        if self._state == Entry.DESELECTED and self.rect.collidepoint(e.pos):
+            self.state = Entry.SELECTED
+        elif self._state == Entry.SELECTED and not self.rect.collidepoint(e.pos):
+            self.state = Entry.DESELECTED
+
+    ## Properties
+
+    def _get_value(self) -&gt; str:
+        return &#34;&#34;.join(self._value)
+
+    def _set_value(self, value: str):
+        at_end = True if self._cursor == len(self._value) else False
+        self._value = list(value)
+        if at_end:
+            self._cursor = len(self._value)
+        else:
+            self._cursor = min(self._cursor, len(self._value))
+
+    value = property(_get_value, _set_value, doc=&#34;Value of the entry, as a string.&#34;)
+
+    def _get_state(self) -&gt; int:
+        return self._state
+
+    def _set_state(self, state: int):
+        if 0 &lt;= state &lt;= 2:
+            self._state = state
+        else:
+            raise ValueError(&#34;must be one of SELECTED, DESELECTED or DISABLED&#34;)
+        if state == Entry.DISABLED:
+            self.disable()
+        else:
+            self.enable()
+
+    state = property(
+        _get_state,
+        _set_state,
+        doc=&#34;State of the Entry, one of SELECTED, DESELECTED or DISABLED&#34;,
+    )
+
+    def _get_cursor(self):
+        return self._cursor
+
+    def _set_cursor(self, cursor: int):
+        if 0 &lt;= cursor &lt;= len(self._value):
+            self._cursor = cursor
+        else:
+            raise ValueError(&#34;value can&#39;t be longer than the length of the Entry&#34;)
+
+    cursor = property(
+        _get_cursor,
+        _set_cursor,
+        doc=&#34;Place of the cursor (after self.cursor letters) from 0 to the value length&#34;,
+    )</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="wipyg.entry.Entry"><code class="flex name class">
+<span>class <span class="ident">Entry</span></span>
+<span>(</span><span>value: str = '', font=None, size: int = 30, length: int = 40, state: int = 1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A text entry Widget</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>value</code></strong> :&ensp;<code>str</code></dt>
+<dd>the text displayed and edited</dd>
+<dt><strong><code>cursor</code></strong> :&ensp;<code>int</code></dt>
+<dd>how many letter before the displayed cursor</dd>
+<dt><strong><code>state</code></strong> :&ensp;<code>int</code></dt>
+<dd>state of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED)</dd>
+</dl>
+<h2 id="custom-event">Custom Event</h2>
+<p>Entry.SUBMIT
+launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
+contains a "value" attribute of type str</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>value</code></strong> :&ensp;<code>str</code></dt>
+<dd>Initial text in the Entry</dd>
+<dt><strong><code>font</code></strong> :&ensp;<code>file | str (filename)</code></dt>
+<dd>Font to use for the Entry</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>int</code></dt>
+<dd>Font size</dd>
+<dt><strong><code>length</code></strong> :&ensp;<code>int</code></dt>
+<dd>How many character long can the Entry take</dd>
+<dt><strong><code>state</code></strong> :&ensp;<code>int</code></dt>
+<dd>State of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED), DESELECTED by default</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>If the initial value is longer than length</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Entry(Widget):
+    &#34;&#34;&#34;A text entry Widget
+
+    Attributes
+    ----------
+    value : str
+        the text displayed and edited
+    cursor : int
+        how many letter before the displayed cursor
+    state : int
+        state of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED)
+
+    Custom event
+    -------------
+    Entry.SUBMIT
+        launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
+        contains a &#34;value&#34; attribute of type str
+    &#34;&#34;&#34;
+
+    # Class constants
+    SUBMIT = custom_type()
+    SELECTED = 0
+    DESELECTED = 1
+    DISABLED = 2
+
+    def __init__(
+        self,
+        value: str = &#34;&#34;,
+        font=None,
+        size: int = 30,
+        length: int = 40,
+        state: int = 1,
+    ):
+        &#34;&#34;&#34;
+        Parameters
+        ----------
+        value : str
+            Initial text in the Entry
+        font : file | str (filename)
+            Font to use for the Entry
+        size : int
+            Font size
+        length : int
+            How many character long can the Entry take
+        state : int
+            State of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED), DESELECTED by default
+
+        Raises
+        ------
+        ValueError
+            If the initial value is longer than length
+        &#34;&#34;&#34;
+        if len(value) &gt; length:
+            raise ValueError(&#34;value can&#39;t be longer than the length of the Entry&#34;)
+        super().__init__()
+        self._length = length
+        self._font = Font(font, size)
+        self._value = list(value)
+        self._cursor = len(value)
+        self._state = state
+        self._first_blink = get_ticks()
+        self.rect = Rect(0, 0, 0, 0)
+        self.redraw()
+
+        self.add_reaction(KEYDOWN, self._press_key)
+        self.add_reaction(MOUSEBUTTONUP, self._select)
+
+    def redraw(self):
+        if self._state == Entry.DISABLED:
+            bg_color = (200, 200, 200)
+            text_color = (100, 100, 100)
+        else:
+            bg_color = (255, 255, 255)
+            text_color = (0, 0, 0)
+
+        pos = self.rect.topleft
+
+        xsize, ysize = self._font.size(&#34;M&#34; * self._length)
+        padding = self._font.get_height()
+        self.rect = Rect(0, 0, xsize + 2 * padding, ysize + 2 * padding)
+
+        value_img = self._font.render(self.value, True, text_color)
+        value_rect = value_img.get_rect(centery=self.rect.centery, left=padding)
+
+        self.image = Surface(self.rect.size, SRCALPHA)
+        self.image.fill((255, 255, 255, 0))
+        border = self.rect.inflate(-2, -2)
+        border.center = self.rect.center
+        rect(self.image, bg_color, border, border_radius=4)
+        rect(self.image, (0, 0, 0), border, width=1, border_radius=4)
+
+        if self._state == Entry.SELECTED:
+            now = get_ticks()
+            if ((now - self._first_blink) // 500) % 2:
+                xcursor = padding + self._font.size(self.value[: self._cursor])[0]
+                cursor_rect = Rect(xcursor, padding, 2, padding)
+                rect(self.image, (0, 0, 0), cursor_rect)
+
+        self.image.blit(value_img, value_rect)
+
+        # reposition the rect as initially
+        self.rect.topleft = pos
+
+    def update(self, *args, **kwargs) -&gt; None:
+        self.redraw()
+
+    def _press_key(self, _, e):
+        letter = e.unicode
+        if self._state == Entry.SELECTED:
+            if e.key == K_LEFT and self._cursor &gt; 0:
+                self._cursor -= 1
+            elif e.key == K_RIGHT and self._cursor &lt; len(self._value):
+                self._cursor += 1
+            elif e.key == K_BACKSPACE and self._cursor &gt; 0:
+                self._cursor -= 1
+                del self._value[self._cursor]
+            elif e.key == K_DELETE and self._cursor &lt; len(self._value):
+                del self._value[self._cursor]
+            elif e.key == K_END:
+                self._cursor = len(self._value)
+            elif e.key == K_HOME:
+                self._cursor = 0
+            elif e.key == K_KP_ENTER or e.key == K_RETURN:
+                self.state = Entry.DESELECTED
+                post(Event(Entry.SUBMIT, dict={&#34;value&#34;: self.value}))
+            elif (
+                letter != &#34;&#34;
+                # don&#39;t react to Control characters
+                and not unicodedata.category(letter).startswith(&#34;C&#34;)
+                and len(self._value) &lt; self._length
+            ):
+                self._value.insert(self._cursor, letter)
+                self._cursor += 1
+
+    def _select(self, _, e):
+        # move the cursor as close as possible to the click (if it is in the Entry)
+        if self.rect.collidepoint(e.pos):
+            padding = self._font.get_height()
+            xletters = [
+                self.rect.left + padding + self._font.size(self.value[:j])[0]
+                for j in range(len(self._value) + 1)
+            ]
+            closest = min(
+                range(len(self._value) + 1), key=lambda i: abs(e.pos[0] - xletters[i])
+            )
+            self._cursor = closest
+
+        # toggle SELECTED and DESELECTED state depending on where the user clicked
+        if self._state == Entry.DESELECTED and self.rect.collidepoint(e.pos):
+            self.state = Entry.SELECTED
+        elif self._state == Entry.SELECTED and not self.rect.collidepoint(e.pos):
+            self.state = Entry.DESELECTED
+
+    ## Properties
+
+    def _get_value(self) -&gt; str:
+        return &#34;&#34;.join(self._value)
+
+    def _set_value(self, value: str):
+        at_end = True if self._cursor == len(self._value) else False
+        self._value = list(value)
+        if at_end:
+            self._cursor = len(self._value)
+        else:
+            self._cursor = min(self._cursor, len(self._value))
+
+    value = property(_get_value, _set_value, doc=&#34;Value of the entry, as a string.&#34;)
+
+    def _get_state(self) -&gt; int:
+        return self._state
+
+    def _set_state(self, state: int):
+        if 0 &lt;= state &lt;= 2:
+            self._state = state
+        else:
+            raise ValueError(&#34;must be one of SELECTED, DESELECTED or DISABLED&#34;)
+        if state == Entry.DISABLED:
+            self.disable()
+        else:
+            self.enable()
+
+    state = property(
+        _get_state,
+        _set_state,
+        doc=&#34;State of the Entry, one of SELECTED, DESELECTED or DISABLED&#34;,
+    )
+
+    def _get_cursor(self):
+        return self._cursor
+
+    def _set_cursor(self, cursor: int):
+        if 0 &lt;= cursor &lt;= len(self._value):
+            self._cursor = cursor
+        else:
+            raise ValueError(&#34;value can&#39;t be longer than the length of the Entry&#34;)
+
+    cursor = property(
+        _get_cursor,
+        _set_cursor,
+        doc=&#34;Place of the cursor (after self.cursor letters) from 0 to the value length&#34;,
+    )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="wipyg.entry.Entry.DESELECTED"><code class="name">var <span class="ident">DESELECTED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="wipyg.entry.Entry.DISABLED"><code class="name">var <span class="ident">DISABLED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="wipyg.entry.Entry.SELECTED"><code class="name">var <span class="ident">SELECTED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="wipyg.entry.Entry.SUBMIT"><code class="name">var <span class="ident">SUBMIT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="wipyg.entry.Entry.cursor"><code class="name">var <span class="ident">cursor</span></code></dt>
+<dd>
+<div class="desc"><p>Place of the cursor (after self.cursor letters) from 0 to the value length</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def _get_cursor(self):
+    return self._cursor</code></pre>
+</details>
+</dd>
+<dt id="wipyg.entry.Entry.state"><code class="name">var <span class="ident">state</span> : int</code></dt>
+<dd>
+<div class="desc"><p>State of the Entry, one of SELECTED, DESELECTED or DISABLED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def _get_state(self) -&gt; int:
+    return self._state</code></pre>
+</details>
+</dd>
+<dt id="wipyg.entry.Entry.value"><code class="name">var <span class="ident">value</span> : str</code></dt>
+<dd>
+<div class="desc"><p>Value of the entry, as a string.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def _get_value(self) -&gt; str:
+    return &#34;&#34;.join(self._value)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="wipyg.entry.Entry.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>self, *args, **kwargs) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>method to control sprite behavior</p>
+<p>Sprite.update(<em>args, </em>*kwargs):</p>
+<p>The default implementation of this method does nothing; it's just a
+convenient "hook" that you can override. This method is called by
+Group.update() with whatever arguments you give it.</p>
+<p>There is no need to use this method if not using the convenience
+method by the same name in the Group class.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update(self, *args, **kwargs) -&gt; None:
+    self.redraw()</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.abstracts.Widget.add_reaction" href="abstracts.html#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.del_reaction" href="abstracts.html#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.disable" href="abstracts.html#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.enable" href="abstracts.html#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.react" href="abstracts.html#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.redraw" href="abstracts.html#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="wipyg" href="index.html">wipyg</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="wipyg.entry.Entry" href="#wipyg.entry.Entry">Entry</a></code></h4>
+<ul class="two-column">
+<li><code><a title="wipyg.entry.Entry.DESELECTED" href="#wipyg.entry.Entry.DESELECTED">DESELECTED</a></code></li>
+<li><code><a title="wipyg.entry.Entry.DISABLED" href="#wipyg.entry.Entry.DISABLED">DISABLED</a></code></li>
+<li><code><a title="wipyg.entry.Entry.SELECTED" href="#wipyg.entry.Entry.SELECTED">SELECTED</a></code></li>
+<li><code><a title="wipyg.entry.Entry.SUBMIT" href="#wipyg.entry.Entry.SUBMIT">SUBMIT</a></code></li>
+<li><code><a title="wipyg.entry.Entry.cursor" href="#wipyg.entry.Entry.cursor">cursor</a></code></li>
+<li><code><a title="wipyg.entry.Entry.state" href="#wipyg.entry.Entry.state">state</a></code></li>
+<li><code><a title="wipyg.entry.Entry.update" href="#wipyg.entry.Entry.update">update</a></code></li>
+<li><code><a title="wipyg.entry.Entry.value" href="#wipyg.entry.Entry.value">value</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

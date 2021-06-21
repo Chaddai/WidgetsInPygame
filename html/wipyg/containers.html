@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>wipyg.containers API documentation</title>
+<meta name="description" content="Provides a Frame container, with a grid, and a Window container with decorations." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>wipyg.containers</code></h1>
+</header>
+<section id="section-intro">
+<p>Provides a Frame container, with a grid, and a Window container with decorations.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># -*- coding: utf-8 -*-
+&#34;&#34;&#34;Provides a Frame container, with a grid, and a Window container with decorations.&#34;&#34;&#34;
+
+from wipyg.abstracts import *
+from pygame.font import Font
+from pygame import Surface, color
+from pygame.draw import *
+
+from wipyg.buttons import IconButton
+
+
+class Frame(GridContainer):
+    &#34;&#34;&#34;A gridded Container without frills
+
+    Attributes
+    ----------
+    bg_color : color
+        The background color of the Frame
+    &#34;&#34;&#34;
+
+    def __init__(
+        self, widgets: list[list[Widget]], bg_color=(255, 255, 255, 0)
+    ) -&gt; None:
+        &#34;&#34;&#34;Create a gridded container that simply display all its children in the minimum space, each centered in its cell
+
+        Parameters
+        ----------
+        widgets : list[list[Widget]], optional
+            An initial grid of widgets, don&#39;t give it an empty list
+        bg_color : color
+            The background color of the Frame, by default transparent
+        Raises
+        ------
+        ValueError
+            widgets can&#39;t be empty, there must be at least one cell in the grid
+        &#34;&#34;&#34;
+        if widgets == [] or widgets[0] == []:
+            raise ValueError(
+                &#34;widgets can&#39;t be empty, there must be at least one cell in the grid&#34;
+            )
+        super().__init__()
+        self._bg_color = bg_color
+
+        self._grid = widgets
+        self.lines = len(widgets)
+        self.columns = len(widgets[0])
+        for y in range(self.lines):
+            for x in range(self.columns):
+                w = self._grid[y][x]
+                if isinstance(w, Sprite):
+                    self.add_widget(w)
+
+        self.rect = self._grid_rect.copy()
+        self.redraw()
+
+    def redraw(self):
+        bg_color = self._bg_color
+        self._refresh_dims()
+        self.rect.size = self._grid_rect.size
+
+        self.image = Surface(self.rect.size, SRCALPHA)
+        self.image.fill(bg_color)
+
+        for y in range(self.lines):
+            for x in range(self.columns):
+                w = self._grid[y][x]
+                if isinstance(w, Sprite):
+                    # center the subwidgets in the cells
+                    r = w.rect
+                    i = w.image
+                    r.center = self._cells[y][x].center
+                    self.image.blit(i, r)
+                    # place the rectangle of the subwidgets relative to the screen for
+                    # correct event reactions
+                    r.move_ip(self.rect.topleft)
+
+    def _get_bg_color(self):
+        return self._bg_color
+
+    def _set_bg_color(self, bg_color):
+        self._bg_color = bg_color
+        self.redraw()
+
+    bg_color = property(
+        _get_bg_color, _set_bg_color, doc=&#34;The background color of the Frame&#34;
+    )
+
+
+CROSS = Surface((20, 20), SRCALPHA)
+line(CROSS, (0, 0, 0), (4, 4), (16, 16))
+line(CROSS, (0, 0, 0), (16, 4), (4, 16))
+BAR = Surface((20, 20), SRCALPHA)
+line(BAR, (0, 0, 0), (4, 10), (16, 10))
+
+
+class Window(Container):
+    &#34;&#34;&#34;A container with a window decoration, allowing to close or minimize (roll up) the container&#34;&#34;&#34;
+
+    def __init__(self, window_content: Widget, bar_color=(110, 110, 110)) -&gt; None:
+        &#34;&#34;&#34;Create a window with a bar with the usual controls to close or minimize the window
+
+        Parameters
+        ----------
+        window_content : Widget
+            The content of the window, usually a Frame but may be a single Widget
+        bar_color : color, optional
+            The color of the window bar, by default (110, 110, 110)
+        &#34;&#34;&#34;
+        super().__init__()
+        self._bar_color = bar_color
+        self._close = IconButton(CROSS)
+        self._minimize = IconButton(BAR)
+        self._content = window_content
+        self.add_widget(self._close)
+        self.add_widget(self._minimize)
+        self.add_widget(window_content)
+
+        self.rect = Rect(0, 0, 0, 0)
+
+        self._minimized = False
+        self._close.add_reaction(Button.CLICKED, self._close_window)
+        self._minimize.add_reaction(Button.CLICKED, self._min_window)
+
+        self.redraw()
+
+    def redraw(self):
+        if self._minimized:
+            self.rect.height = 20
+        else:
+            self._content.rect.topleft = self.rect.move(0, 20).topleft
+            self._content.redraw()
+            content_img = self._content.image
+            content_rect = content_img.get_rect(y=20)
+
+            self.rect.size = content_rect.size
+            self.rect.height += 20
+
+        self.image = Surface(self.rect.size, SRCALPHA)
+
+        if not self._minimized:
+            self.image.blit(content_img, content_rect)
+
+        rect(self.image, self._bar_color, Rect(0, 0, self.rect.width, 20))
+
+        self._close.rect.topright = self.rect.topright
+        self._minimize.rect.topright = self.rect.move(-20, 0).topright
+        self._close.redraw()
+        self._minimize.redraw()
+        self.image.blit(self._close.image, Rect(self.rect.width - 20, 0, 20, 20))
+        self.image.blit(self._minimize.image, Rect(self.rect.width - 40, 0, 20, 20))
+
+    def _close_window(self, source, e):
+        if e.button == self._close:
+            self.kill()
+
+    def _min_window(self, source, e):
+        if e.button == self._minimize:
+            self._minimized = not self._minimized
+            if self._minimized:
+                self._content.disable()
+            else:
+                self._content.enable()
+            self.redraw()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="wipyg.containers.Frame"><code class="flex name class">
+<span>class <span class="ident">Frame</span></span>
+<span>(</span><span>widgets: list, bg_color=(255, 255, 255, 0))</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A gridded Container without frills</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>bg_color</code></strong> :&ensp;<code>color</code></dt>
+<dd>The background color of the Frame</dd>
+</dl>
+<p>Create a gridded container that simply display all its children in the minimum space, each centered in its cell</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>widgets</code></strong> :&ensp;<code>list[list[Widget]]</code>, optional</dt>
+<dd>An initial grid of widgets, don't give it an empty list</dd>
+<dt><strong><code>bg_color</code></strong> :&ensp;<code>color</code></dt>
+<dd>The background color of the Frame, by default transparent</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>widgets can't be empty, there must be at least one cell in the grid</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Frame(GridContainer):
+    &#34;&#34;&#34;A gridded Container without frills
+
+    Attributes
+    ----------
+    bg_color : color
+        The background color of the Frame
+    &#34;&#34;&#34;
+
+    def __init__(
+        self, widgets: list[list[Widget]], bg_color=(255, 255, 255, 0)
+    ) -&gt; None:
+        &#34;&#34;&#34;Create a gridded container that simply display all its children in the minimum space, each centered in its cell
+
+        Parameters
+        ----------
+        widgets : list[list[Widget]], optional
+            An initial grid of widgets, don&#39;t give it an empty list
+        bg_color : color
+            The background color of the Frame, by default transparent
+        Raises
+        ------
+        ValueError
+            widgets can&#39;t be empty, there must be at least one cell in the grid
+        &#34;&#34;&#34;
+        if widgets == [] or widgets[0] == []:
+            raise ValueError(
+                &#34;widgets can&#39;t be empty, there must be at least one cell in the grid&#34;
+            )
+        super().__init__()
+        self._bg_color = bg_color
+
+        self._grid = widgets
+        self.lines = len(widgets)
+        self.columns = len(widgets[0])
+        for y in range(self.lines):
+            for x in range(self.columns):
+                w = self._grid[y][x]
+                if isinstance(w, Sprite):
+                    self.add_widget(w)
+
+        self.rect = self._grid_rect.copy()
+        self.redraw()
+
+    def redraw(self):
+        bg_color = self._bg_color
+        self._refresh_dims()
+        self.rect.size = self._grid_rect.size
+
+        self.image = Surface(self.rect.size, SRCALPHA)
+        self.image.fill(bg_color)
+
+        for y in range(self.lines):
+            for x in range(self.columns):
+                w = self._grid[y][x]
+                if isinstance(w, Sprite):
+                    # center the subwidgets in the cells
+                    r = w.rect
+                    i = w.image
+                    r.center = self._cells[y][x].center
+                    self.image.blit(i, r)
+                    # place the rectangle of the subwidgets relative to the screen for
+                    # correct event reactions
+                    r.move_ip(self.rect.topleft)
+
+    def _get_bg_color(self):
+        return self._bg_color
+
+    def _set_bg_color(self, bg_color):
+        self._bg_color = bg_color
+        self.redraw()
+
+    bg_color = property(
+        _get_bg_color, _set_bg_color, doc=&#34;The background color of the Frame&#34;
+    )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.GridContainer" href="abstracts.html#wipyg.abstracts.GridContainer">GridContainer</a></li>
+<li><a title="wipyg.abstracts.Container" href="abstracts.html#wipyg.abstracts.Container">Container</a></li>
+<li><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="wipyg.containers.Frame.bg_color"><code class="name">var <span class="ident">bg_color</span></code></dt>
+<dd>
+<div class="desc"><p>The background color of the Frame</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def _get_bg_color(self):
+    return self._bg_color</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.abstracts.GridContainer" href="abstracts.html#wipyg.abstracts.GridContainer">GridContainer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.abstracts.GridContainer.add_reaction" href="abstracts.html#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.add_widget" href="abstracts.html#wipyg.abstracts.Container.add_widget">add_widget</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.columns" href="abstracts.html#wipyg.abstracts.GridContainer.columns">columns</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.del_cell" href="abstracts.html#wipyg.abstracts.GridContainer.del_cell">del_cell</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.del_reaction" href="abstracts.html#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.del_widget" href="abstracts.html#wipyg.abstracts.Container.del_widget">del_widget</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.disable" href="abstracts.html#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.enable" href="abstracts.html#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.get_grid" href="abstracts.html#wipyg.abstracts.GridContainer.get_grid">get_grid</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.kill" href="abstracts.html#wipyg.abstracts.Container.kill">kill</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.lines" href="abstracts.html#wipyg.abstracts.GridContainer.lines">lines</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.react" href="abstracts.html#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.redraw" href="abstracts.html#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.set_grid" href="abstracts.html#wipyg.abstracts.GridContainer.set_grid">set_grid</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.update" href="abstracts.html#wipyg.abstracts.Container.update">update</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="wipyg.containers.Window"><code class="flex name class">
+<span>class <span class="ident">Window</span></span>
+<span>(</span><span>window_content: <a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a>, bar_color=(110, 110, 110))</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A container with a window decoration, allowing to close or minimize (roll up) the container</p>
+<p>Create a window with a bar with the usual controls to close or minimize the window</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>window_content</code></strong> :&ensp;<code>Widget</code></dt>
+<dd>The content of the window, usually a Frame but may be a single Widget</dd>
+<dt><strong><code>bar_color</code></strong> :&ensp;<code>color</code>, optional</dt>
+<dd>The color of the window bar, by default (110, 110, 110)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Window(Container):
+    &#34;&#34;&#34;A container with a window decoration, allowing to close or minimize (roll up) the container&#34;&#34;&#34;
+
+    def __init__(self, window_content: Widget, bar_color=(110, 110, 110)) -&gt; None:
+        &#34;&#34;&#34;Create a window with a bar with the usual controls to close or minimize the window
+
+        Parameters
+        ----------
+        window_content : Widget
+            The content of the window, usually a Frame but may be a single Widget
+        bar_color : color, optional
+            The color of the window bar, by default (110, 110, 110)
+        &#34;&#34;&#34;
+        super().__init__()
+        self._bar_color = bar_color
+        self._close = IconButton(CROSS)
+        self._minimize = IconButton(BAR)
+        self._content = window_content
+        self.add_widget(self._close)
+        self.add_widget(self._minimize)
+        self.add_widget(window_content)
+
+        self.rect = Rect(0, 0, 0, 0)
+
+        self._minimized = False
+        self._close.add_reaction(Button.CLICKED, self._close_window)
+        self._minimize.add_reaction(Button.CLICKED, self._min_window)
+
+        self.redraw()
+
+    def redraw(self):
+        if self._minimized:
+            self.rect.height = 20
+        else:
+            self._content.rect.topleft = self.rect.move(0, 20).topleft
+            self._content.redraw()
+            content_img = self._content.image
+            content_rect = content_img.get_rect(y=20)
+
+            self.rect.size = content_rect.size
+            self.rect.height += 20
+
+        self.image = Surface(self.rect.size, SRCALPHA)
+
+        if not self._minimized:
+            self.image.blit(content_img, content_rect)
+
+        rect(self.image, self._bar_color, Rect(0, 0, self.rect.width, 20))
+
+        self._close.rect.topright = self.rect.topright
+        self._minimize.rect.topright = self.rect.move(-20, 0).topright
+        self._close.redraw()
+        self._minimize.redraw()
+        self.image.blit(self._close.image, Rect(self.rect.width - 20, 0, 20, 20))
+        self.image.blit(self._minimize.image, Rect(self.rect.width - 40, 0, 20, 20))
+
+    def _close_window(self, source, e):
+        if e.button == self._close:
+            self.kill()
+
+    def _min_window(self, source, e):
+        if e.button == self._minimize:
+            self._minimized = not self._minimized
+            if self._minimized:
+                self._content.disable()
+            else:
+                self._content.enable()
+            self.redraw()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.Container" href="abstracts.html#wipyg.abstracts.Container">Container</a></li>
+<li><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.abstracts.Container" href="abstracts.html#wipyg.abstracts.Container">Container</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.abstracts.Container.add_reaction" href="abstracts.html#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.add_widget" href="abstracts.html#wipyg.abstracts.Container.add_widget">add_widget</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.del_reaction" href="abstracts.html#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.del_widget" href="abstracts.html#wipyg.abstracts.Container.del_widget">del_widget</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.disable" href="abstracts.html#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.enable" href="abstracts.html#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.kill" href="abstracts.html#wipyg.abstracts.Container.kill">kill</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.react" href="abstracts.html#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.redraw" href="abstracts.html#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.update" href="abstracts.html#wipyg.abstracts.Container.update">update</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="wipyg" href="index.html">wipyg</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="wipyg.containers.Frame" href="#wipyg.containers.Frame">Frame</a></code></h4>
+<ul class="">
+<li><code><a title="wipyg.containers.Frame.bg_color" href="#wipyg.containers.Frame.bg_color">bg_color</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="wipyg.containers.Window" href="#wipyg.containers.Window">Window</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
