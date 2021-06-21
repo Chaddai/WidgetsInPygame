@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((320, 240))
 screen_rect = screen.get_rect()
 pygame.display.set_caption("Demo of wipyg Widgets")
 
-but_quit = buttons.StandardButton(text="Quitter")
+but_quit = buttons.PlainButton(text="Quitter")
 
 
 def quit(s, e):
@@ -23,7 +23,7 @@ but_quit.add_reaction(Button.CLICKED, quit)
 but_quit.rect.bottomright = screen_rect.bottomright
 
 
-but_print = buttons.StandardButton(text="Hello")
+but_print = buttons.PlainButton(text="Hello")
 
 
 def hello(s, e):
@@ -33,7 +33,7 @@ def hello(s, e):
 
 but_print.add_reaction(Button.CLICKED, hello)
 
-but_disabled = buttons.StandardButton()
+but_disabled = buttons.PlainButton()
 but_disabled.state = Button.DISABLED
 but_disabled.rect.bottomleft = screen_rect.bottomleft
 

@@ -4,7 +4,7 @@ from pygame import Surface
 from pygame.draw import *
 
 
-class StandardButton(Button):
+class PlainButton(Button):
     """A normal button, light grey background when INACTIVE, almost white if ACTIVE, text greyed out if DISABLED"""
 
     def __init__(self, text="Ok", font=None, size=30) -> None:
@@ -15,15 +15,7 @@ class StandardButton(Button):
         self._draw_button()
 
     def _draw_button(self):
-        if self.state == Button.INACTIVE:
-            bg_color = (210, 210, 210)
-            text_color = (0, 0, 0)
-        elif self.state == Button.ACTIVE:
-            bg_color = (250, 250, 250)
-            text_color = (0, 0, 0)
-        elif self.state == Button.DISABLED:
-            bg_color = (150, 150, 150)
-            text_color = (100, 100, 100)
+        bg_color, text_color = self._colors()
 
         pos = self.rect.topleft
         self._text_img = self._font.render(self._text, True, text_color)
@@ -43,6 +35,18 @@ class StandardButton(Button):
 
         # reposition the rect as initially
         self.rect.topleft = pos
+
+    def _colors(self):
+        if self.state == Button.INACTIVE:
+            bg_color = (210, 210, 210)
+            text_color = (0, 0, 0)
+        elif self.state == Button.ACTIVE:
+            bg_color = (250, 250, 250)
+            text_color = (0, 0, 0)
+        elif self.state == Button.DISABLED:
+            bg_color = (150, 150, 150)
+            text_color = (100, 100, 100)
+        return bg_color, text_color
 
     def update(self, *args, **kwargs) -> None:
         self._draw_button()
