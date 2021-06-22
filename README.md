@@ -57,3 +57,113 @@ L'API est documentée en deux emplacements :
 - D'un autre côté pour une documentation un peu plus abordable, on peut se reporter à la [production de pdoc3](html/wipyg/index.html).
 
 ### Tutorial minimal
+
+Un programme Pygame minimal ressemble à ceci :
+
+```python
+# on importe la librairie pygame
+import pygame
+# pour plus de clarté, on importe les constantes dans notre espace de nom
+from pygame.locals import *
+
+# on initialise pygame (système de son, polices, graphismes...)
+pygame.init()
+
+# on crée une fenêtre (ou un plein écran avec l'option FULLSCREEN)
+# pygame a des sous parties comme display qui s'occupe de l'affichage
+window = pygame.display.set_mode( (800,600) )
+
+# une variable pour indiquer si le programme est en train de tourner
+running = True
+# la boucle principale qui tourne en permanence pour modifier l'affichage
+# et gérer les évènements
+while running:
+    # à chaque tour de boucle, on inspecte les événements (clavier, souris, ...)
+    for event in pygame.event.get(): # get() renvoie et vide la liste des événements
+
+        # event.type indique le type d'événement :
+        # - KEYDOWN : appui sur une touche
+        # - KEYUP : relache d'une touche
+        # ...
+        # QUIT : un événement spécial émis par l'OS lorsque l'on clique sur la croix
+        # ou l'on appuie sur Alt+F4 (sous Windows)
+        if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
+            # on met fin à la boucle
+            running = False
+
+    # ici on modifie l'affichage si nécessaire, par exemple en remplissant la
+    # fenêtre d'une couleur unie (en rvb) :
+    window.fill( (255,0,0) )
+
+    # ATTENTION : par défaut pygame est en mode double buffer, ce qui veut dire
+    # que toute vos manipulation de window sont uniquement faite en mémoire,
+    # pour envoyer votre window modifiée sur l'écran il faut utiliser flip()
+    pygame.display.flip()
+
+# on arrête proprement les systèmes pygame (uniquement nécessaire si le programme
+# n'est pas tout à fait fini)
+pygame.quit()
+```
+
+Autrement dit :
+
+```python
+import pygame
+from pygame.locals import *
+
+pygame.init()
+
+window = pygame.display.set_mode( (800,600) )
+
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
+            running = False
+
+
+    window.fill( (255,0,0) )
+    pygame.display.flip()
+
+pygame.quit()
+```
+
+Les `Widget` de `wipyg` héritent de [pygame.Sprite](https://www.pygame.org/docs/ref/sprite.html) donc on est censé les placer dans des [pygame.Group](https://www.pygame.org/docs/ref/sprite.html#pygame.sprite.Group) pour ensuite les mettre à jour et les manipuler en masse. On peut les positionner en manipulant leur attribut `rect` du type [pygame.Rect](https://www.pygame.org/docs/ref/rect.html) qui a beaucoup de propriétés pratiques pour cela.
+
+```python
+import pygame
+from pygame.locals import *
+
+from wipyg import *
+
+pygame.init()
+
+window = pygame.display.set_mode( (800,600) )
+
+label = Label("hello")
+entry = Entry("", length=10)
+entry.rect.topright = (800,0)
+widgets = Group(label, entry)
+
+running = True
+while running:
+    for event in pygame.event.get():
+
+        # Les Widgets ont une méthode react qu'on doit appeler pour qu'ils
+        # réagissent correctement aux événements
+        for w in widgets:
+            w.react(event)
+
+        if event.type == QUIT or (event.type == KEYUP and event.key == K_ESCAPE):
+            running = False
+
+    window.fill( (255,0,0) )
+    widgets.update()
+    widgets.draw(window)
+
+    pygame.display.flip()
+
+pygame.quit()
+```
+
+Noter que les widgets qui héritent de `Container` s'occupent de leurs enfants tout seul, il n'est pas nécessaire de les parcourir.
