@@ -30,13 +30,27 @@
 <pre><code class="python"># -*- coding: utf-8 -*-
 &#34;&#34;&#34;wipyg provides some widgets class based on Sprite to build basic GUIs in Pygame.&#34;&#34;&#34;
 
-import wipyg.abstracts
-import wipyg.containers
-import wipyg.buttons
-import wipyg.entry
-import wipyg.label
+from wipyg.abstracts import *
+from wipyg.containers import *
+from wipyg.buttons import *
+from wipyg.entry import *
+from wipyg.label import *
 
-__all__ = [&#34;abstracts&#34;, &#34;containers&#34;, &#34;buttons&#34;, &#34;entry&#34;, &#34;label&#34;]</code></pre>
+__all__ = [
+    &#34;abstracts&#34;,
+    &#34;containers&#34;,
+    &#34;buttons&#34;,
+    &#34;entry&#34;,
+    &#34;label&#34;,
+    &#34;Frame&#34;,
+    &#34;Window&#34;,
+    &#34;PlainButton&#34;,
+    &#34;SubmitButton&#34;,
+    &#34;CancelButton&#34;,
+    &#34;IconButton&#34;,
+    &#34;Entry&#34;,
+    &#34;Label&#34;,
+]</code></pre>
 </details>
 </section>
 <section>
@@ -69,6 +83,1060 @@ __all__ = [&#34;abstracts&#34;, &#34;containers&#34;, &#34;buttons&#34;, &#34;en
 <section>
 </section>
 <section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="wipyg.CancelButton"><code class="flex name class">
+<span>class <span class="ident">CancelButton</span></span>
+<span>(</span><span>text='Ok', font=None, size=30, state: int = 0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Button to cancel or refuse actions/things : red in INACTIVE, pink in ACTIVE, greyish red in DISABLED</p>
+<p>Create a plain button with grey background and black text</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The text displayed on the button, by default "Ok"</dd>
+<dt><strong><code>font</code></strong> :&ensp;<code>file | filename</code>, optional</dt>
+<dd>The source file for the font, by default None, that is the default Pygame sys font</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Font size (in pixels), by default 30</dd>
+<dt><strong><code>state</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Initial state of the button, one of (Button.ACTIVE, Button.INACTIVE, Button.DISABLED), by default Button.INACTIVE</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class CancelButton(PlainButton):
+    &#34;&#34;&#34;Button to cancel or refuse actions/things : red in INACTIVE, pink in ACTIVE, greyish red in DISABLED&#34;&#34;&#34;
+
+    def _colors(self):
+        if self.state == Button.INACTIVE:
+            bg_color = (255, 0, 0)
+            text_color = (255, 255, 255)
+        elif self.state == Button.ACTIVE:
+            bg_color = (219, 127, 127)
+            text_color = (0, 0, 0)
+        elif self.state == Button.DISABLED:
+            bg_color = (110, 0, 0)
+            text_color = (100, 100, 100)
+        return bg_color, text_color</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.buttons.PlainButton" href="buttons.html#wipyg.buttons.PlainButton">PlainButton</a></li>
+<li><a title="wipyg.abstracts.Button" href="abstracts.html#wipyg.abstracts.Button">Button</a></li>
+<li><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.buttons.PlainButton" href="buttons.html#wipyg.buttons.PlainButton">PlainButton</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.buttons.PlainButton.add_reaction" href="abstracts.html#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.buttons.PlainButton.del_reaction" href="abstracts.html#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.buttons.PlainButton.disable" href="abstracts.html#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.buttons.PlainButton.enable" href="abstracts.html#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.buttons.PlainButton.react" href="abstracts.html#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.buttons.PlainButton.redraw" href="abstracts.html#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+<li><code><a title="wipyg.buttons.PlainButton.state" href="abstracts.html#wipyg.abstracts.Button.state">state</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="wipyg.Entry"><code class="flex name class">
+<span>class <span class="ident">Entry</span></span>
+<span>(</span><span>value: str = '', font=None, size: int = 30, length: int = 40, state: int = 1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A text entry Widget</p>
+<p>React to typing from the user if the state is <code>SELECTED</code>. Click on the
+entry to select it and position the blinking cursor.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>value</code></strong> :&ensp;<code>str</code></dt>
+<dd>the text displayed and edited</dd>
+<dt><strong><code>cursor</code></strong> :&ensp;<code>int</code></dt>
+<dd>how many letter before the displayed cursor</dd>
+<dt><strong><code>state</code></strong> :&ensp;<code>int</code></dt>
+<dd>state of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED)</dd>
+</dl>
+<h2 id="custom-event">Custom Event</h2>
+<pre><code>Entry.SUBMIT : launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
+contains a "value" attribute of type str and the "entry" it comes from
+</code></pre>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>value</code></strong> :&ensp;<code>str</code></dt>
+<dd>Initial text in the Entry</dd>
+<dt><strong><code>font</code></strong> :&ensp;<code>file | str (filename)</code></dt>
+<dd>Font to use for the Entry</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>int</code></dt>
+<dd>Font size</dd>
+<dt><strong><code>length</code></strong> :&ensp;<code>int</code></dt>
+<dd>How many character long can the Entry take</dd>
+<dt><strong><code>state</code></strong> :&ensp;<code>int</code></dt>
+<dd>State of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED), DESELECTED by default</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>If the initial value is longer than length</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Entry(Widget):
+    &#34;&#34;&#34;A text entry Widget
+
+    React to typing from the user if the state is `SELECTED`. Click on the
+    entry to select it and position the blinking cursor.
+
+    Attributes
+    ----------
+    value : str
+        the text displayed and edited
+    cursor : int
+        how many letter before the displayed cursor
+    state : int
+        state of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED)
+
+    Custom event
+    -------------
+        Entry.SUBMIT : launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
+        contains a &#34;value&#34; attribute of type str and the &#34;entry&#34; it comes from
+    &#34;&#34;&#34;
+
+    # Class constants
+    SUBMIT = custom_type()
+    SELECTED = 0
+    DESELECTED = 1
+    DISABLED = 2
+
+    def __init__(
+        self,
+        value: str = &#34;&#34;,
+        font=None,
+        size: int = 30,
+        length: int = 40,
+        state: int = 1,
+    ):
+        &#34;&#34;&#34;
+        Parameters
+        ----------
+        value : str
+            Initial text in the Entry
+        font : file | str (filename)
+            Font to use for the Entry
+        size : int
+            Font size
+        length : int
+            How many character long can the Entry take
+        state : int
+            State of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED), DESELECTED by default
+
+        Raises
+        ------
+        ValueError
+            If the initial value is longer than length
+        &#34;&#34;&#34;
+        if len(value) &gt; length:
+            raise ValueError(&#34;value can&#39;t be longer than the length of the Entry&#34;)
+        super().__init__()
+        self._length = length
+        self._font = Font(font, size)
+        self._value = list(value)
+        self._cursor = len(value)
+        self._state = state
+        self._first_blink = get_ticks()
+        self.rect = Rect(0, 0, 0, 0)
+        self.redraw()
+
+        self.add_reaction(KEYDOWN, self._press_key)
+        self.add_reaction(MOUSEBUTTONUP, self._select)
+
+    def redraw(self):
+        if self._state == Entry.DISABLED:
+            bg_color = (200, 200, 200)
+            text_color = (100, 100, 100)
+        else:
+            bg_color = (255, 255, 255)
+            text_color = (0, 0, 0)
+
+        pos = self.rect.topleft
+
+        xsize, ysize = self._font.size(&#34;M&#34; * self._length)
+        padding = self._font.get_height()
+        self.rect = Rect(0, 0, xsize + 2 * padding, ysize + 2 * padding)
+
+        value_img = self._font.render(self.value, True, text_color)
+        value_rect = value_img.get_rect(centery=self.rect.centery, left=padding)
+
+        self.image = Surface(self.rect.size, SRCALPHA)
+        self.image.fill((255, 255, 255, 0))
+        border = self.rect.inflate(-2, -2)
+        border.center = self.rect.center
+        rect(self.image, bg_color, border, border_radius=4)
+        rect(self.image, (0, 0, 0), border, width=1, border_radius=4)
+
+        if self._state == Entry.SELECTED:
+            now = get_ticks()
+            if ((now - self._first_blink) // 500) % 2:
+                xcursor = padding + self._font.size(self.value[: self._cursor])[0]
+                cursor_rect = Rect(xcursor, padding, 2, padding)
+                rect(self.image, (0, 0, 0), cursor_rect)
+
+        self.image.blit(value_img, value_rect)
+
+        # reposition the rect as initially
+        self.rect.topleft = pos
+
+    def update(self, *args, **kwargs) -&gt; None:
+        self.redraw()
+
+    def _press_key(self, _, e):
+        letter = e.unicode
+        if self._state == Entry.SELECTED:
+            if e.key == K_LEFT and self._cursor &gt; 0:
+                self._cursor -= 1
+            elif e.key == K_RIGHT and self._cursor &lt; len(self._value):
+                self._cursor += 1
+            elif e.key == K_BACKSPACE and self._cursor &gt; 0:
+                self._cursor -= 1
+                del self._value[self._cursor]
+            elif e.key == K_DELETE and self._cursor &lt; len(self._value):
+                del self._value[self._cursor]
+            elif e.key == K_END:
+                self._cursor = len(self._value)
+            elif e.key == K_HOME:
+                self._cursor = 0
+            elif e.key == K_KP_ENTER or e.key == K_RETURN:
+                self.state = Entry.DESELECTED
+                post(Event(Entry.SUBMIT, {&#34;value&#34;: self.value, &#34;entry&#34;: self}))
+            elif (
+                letter != &#34;&#34;
+                # don&#39;t react to Control characters
+                and not unicodedata.category(letter).startswith(&#34;C&#34;)
+                and len(self._value) &lt; self._length
+            ):
+                self._value.insert(self._cursor, letter)
+                self._cursor += 1
+
+    def _select(self, _, e):
+        # move the cursor as close as possible to the click (if it is in the Entry)
+        if self.rect.collidepoint(e.pos):
+            padding = self._font.get_height()
+            xletters = [
+                self.rect.left + padding + self._font.size(self.value[:j])[0]
+                for j in range(len(self._value) + 1)
+            ]
+            closest = min(
+                range(len(self._value) + 1), key=lambda i: abs(e.pos[0] - xletters[i])
+            )
+            self._cursor = closest
+
+        # toggle SELECTED and DESELECTED state depending on where the user clicked
+        if self._state == Entry.DESELECTED and self.rect.collidepoint(e.pos):
+            self.state = Entry.SELECTED
+        elif self._state == Entry.SELECTED and not self.rect.collidepoint(e.pos):
+            self.state = Entry.DESELECTED
+
+    ## Properties
+
+    def _get_value(self) -&gt; str:
+        return &#34;&#34;.join(self._value)
+
+    def _set_value(self, value: str):
+        at_end = True if self._cursor == len(self._value) else False
+        self._value = list(value)
+        if at_end:
+            self._cursor = len(self._value)
+        else:
+            self._cursor = min(self._cursor, len(self._value))
+
+    value = property(_get_value, _set_value, doc=&#34;Value of the entry, as a string.&#34;)
+
+    def _get_state(self) -&gt; int:
+        return self._state
+
+    def _set_state(self, state: int):
+        if 0 &lt;= state &lt;= 2:
+            self._state = state
+        else:
+            raise ValueError(&#34;must be one of SELECTED, DESELECTED or DISABLED&#34;)
+        if state == Entry.DISABLED:
+            self.disable()
+        else:
+            self.enable()
+
+    state = property(
+        _get_state,
+        _set_state,
+        doc=&#34;State of the Entry, one of SELECTED, DESELECTED or DISABLED&#34;,
+    )
+
+    def _get_cursor(self):
+        return self._cursor
+
+    def _set_cursor(self, cursor: int):
+        if 0 &lt;= cursor &lt;= len(self._value):
+            self._cursor = cursor
+        else:
+            raise ValueError(&#34;value can&#39;t be longer than the length of the Entry&#34;)
+
+    cursor = property(
+        _get_cursor,
+        _set_cursor,
+        doc=&#34;Place of the cursor (after self.cursor letters) from 0 to the value length&#34;,
+    )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="wipyg.Entry.DESELECTED"><code class="name">var <span class="ident">DESELECTED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="wipyg.Entry.DISABLED"><code class="name">var <span class="ident">DISABLED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="wipyg.Entry.SELECTED"><code class="name">var <span class="ident">SELECTED</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="wipyg.Entry.SUBMIT"><code class="name">var <span class="ident">SUBMIT</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="wipyg.Entry.cursor"><code class="name">var <span class="ident">cursor</span></code></dt>
+<dd>
+<div class="desc"><p>Place of the cursor (after self.cursor letters) from 0 to the value length</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def _get_cursor(self):
+    return self._cursor</code></pre>
+</details>
+</dd>
+<dt id="wipyg.Entry.state"><code class="name">var <span class="ident">state</span> : int</code></dt>
+<dd>
+<div class="desc"><p>State of the Entry, one of SELECTED, DESELECTED or DISABLED</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def _get_state(self) -&gt; int:
+    return self._state</code></pre>
+</details>
+</dd>
+<dt id="wipyg.Entry.value"><code class="name">var <span class="ident">value</span> : str</code></dt>
+<dd>
+<div class="desc"><p>Value of the entry, as a string.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def _get_value(self) -&gt; str:
+    return &#34;&#34;.join(self._value)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="wipyg.Entry.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>self, *args, **kwargs) ‑> NoneType</span>
+</code></dt>
+<dd>
+<div class="desc"><p>method to control sprite behavior</p>
+<p>Sprite.update(<em>args, </em>*kwargs):</p>
+<p>The default implementation of this method does nothing; it's just a
+convenient "hook" that you can override. This method is called by
+Group.update() with whatever arguments you give it.</p>
+<p>There is no need to use this method if not using the convenience
+method by the same name in the Group class.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update(self, *args, **kwargs) -&gt; None:
+    self.redraw()</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.abstracts.Widget.add_reaction" href="abstracts.html#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.del_reaction" href="abstracts.html#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.disable" href="abstracts.html#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.enable" href="abstracts.html#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.react" href="abstracts.html#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.redraw" href="abstracts.html#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="wipyg.Frame"><code class="flex name class">
+<span>class <span class="ident">Frame</span></span>
+<span>(</span><span>widgets: list, bg_color=(255, 255, 255, 0))</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A gridded Container without frills</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>bg_color</code></strong> :&ensp;<code>color</code></dt>
+<dd>The background color of the Frame</dd>
+</dl>
+<p>Create a gridded container that simply display all its children in the minimum space, each centered in its cell</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>widgets</code></strong> :&ensp;<code>list[list[Widget]]</code>, optional</dt>
+<dd>An initial grid of widgets, don't give it an empty list</dd>
+<dt><strong><code>bg_color</code></strong> :&ensp;<code>color</code></dt>
+<dd>The background color of the Frame, by default transparent</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>widgets can't be empty, there must be at least one cell in the grid</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Frame(GridContainer):
+    &#34;&#34;&#34;A gridded Container without frills
+
+    Attributes
+    ----------
+    bg_color : color
+        The background color of the Frame
+    &#34;&#34;&#34;
+
+    def __init__(
+        self, widgets: list[list[Widget]], bg_color=(255, 255, 255, 0)
+    ) -&gt; None:
+        &#34;&#34;&#34;Create a gridded container that simply display all its children in the minimum space, each centered in its cell
+
+        Parameters
+        ----------
+        widgets : list[list[Widget]], optional
+            An initial grid of widgets, don&#39;t give it an empty list
+        bg_color : color
+            The background color of the Frame, by default transparent
+        Raises
+        ------
+        ValueError
+            widgets can&#39;t be empty, there must be at least one cell in the grid
+        &#34;&#34;&#34;
+        if widgets == [] or widgets[0] == []:
+            raise ValueError(
+                &#34;widgets can&#39;t be empty, there must be at least one cell in the grid&#34;
+            )
+        super().__init__()
+        self._bg_color = bg_color
+
+        self._grid = widgets
+        self.lines = len(widgets)
+        self.columns = len(widgets[0])
+        for y in range(self.lines):
+            for x in range(self.columns):
+                w = self._grid[y][x]
+                if isinstance(w, Sprite):
+                    self.add_widget(w)
+
+        self.rect = self._grid_rect.copy()
+        self.redraw()
+
+    def redraw(self):
+        bg_color = self._bg_color
+        self._refresh_dims()
+        self.rect.size = self._grid_rect.size
+
+        self.image = Surface(self.rect.size, SRCALPHA)
+        self.image.fill(bg_color)
+
+        for y in range(self.lines):
+            for x in range(self.columns):
+                w = self._grid[y][x]
+                if isinstance(w, Sprite):
+                    # center the subwidgets in the cells
+                    r = w.rect
+                    i = w.image
+                    r.center = self._cells[y][x].center
+                    self.image.blit(i, r)
+                    # place the rectangle of the subwidgets relative to the screen for
+                    # correct event reactions
+                    r.move_ip(self.rect.topleft)
+
+    def _get_bg_color(self):
+        return self._bg_color
+
+    def _set_bg_color(self, bg_color):
+        self._bg_color = bg_color
+        self.redraw()
+
+    bg_color = property(
+        _get_bg_color, _set_bg_color, doc=&#34;The background color of the Frame&#34;
+    )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.GridContainer" href="abstracts.html#wipyg.abstracts.GridContainer">GridContainer</a></li>
+<li><a title="wipyg.abstracts.Container" href="abstracts.html#wipyg.abstracts.Container">Container</a></li>
+<li><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="wipyg.Frame.bg_color"><code class="name">var <span class="ident">bg_color</span></code></dt>
+<dd>
+<div class="desc"><p>The background color of the Frame</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def _get_bg_color(self):
+    return self._bg_color</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.abstracts.GridContainer" href="abstracts.html#wipyg.abstracts.GridContainer">GridContainer</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.abstracts.GridContainer.add_reaction" href="abstracts.html#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.add_widget" href="abstracts.html#wipyg.abstracts.Container.add_widget">add_widget</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.columns" href="abstracts.html#wipyg.abstracts.GridContainer.columns">columns</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.del_cell" href="abstracts.html#wipyg.abstracts.GridContainer.del_cell">del_cell</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.del_reaction" href="abstracts.html#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.del_widget" href="abstracts.html#wipyg.abstracts.Container.del_widget">del_widget</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.disable" href="abstracts.html#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.enable" href="abstracts.html#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.get_grid" href="abstracts.html#wipyg.abstracts.GridContainer.get_grid">get_grid</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.kill" href="abstracts.html#wipyg.abstracts.Container.kill">kill</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.lines" href="abstracts.html#wipyg.abstracts.GridContainer.lines">lines</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.react" href="abstracts.html#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.redraw" href="abstracts.html#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.set_grid" href="abstracts.html#wipyg.abstracts.GridContainer.set_grid">set_grid</a></code></li>
+<li><code><a title="wipyg.abstracts.GridContainer.update" href="abstracts.html#wipyg.abstracts.Container.update">update</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="wipyg.IconButton"><code class="flex name class">
+<span>class <span class="ident">IconButton</span></span>
+<span>(</span><span>icon: pygame.Surface, active_icon: pygame.Surface = None, disabled_icon=None, state: int = 0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A button that is just a Surface (or several if you chose to provide ACTIVE and DISABLED versions)</p>
+<p>Create an icon button</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>icon</code></strong> :&ensp;<code>Surface</code></dt>
+<dd>the normal appearance of the button, clicking anywhere on the Surface will post a Button.CLICKED</dd>
+<dt><strong><code>active_icon</code></strong> :&ensp;<code>Surface</code>, optional</dt>
+<dd>Appearance of the button when clicked on (before MOUSEBUTTONUP fires), by default the same as icon</dd>
+<dt><strong><code>disabled_icon</code></strong> :&ensp;<code>[type]</code>, optional</dt>
+<dd>Appearance of the button if it is in Button.DISABLED state, by default the same as icon</dd>
+<dt><strong><code>state</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Initial state of the button, by default Button.INACTIVE</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>[description]</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class IconButton(Button):
+    &#34;&#34;&#34;A button that is just a Surface (or several if you chose to provide ACTIVE and DISABLED versions)&#34;&#34;&#34;
+
+    def __init__(
+        self,
+        icon: Surface,
+        active_icon: Surface = None,
+        disabled_icon=None,
+        state: int = Button.INACTIVE,
+    ) -&gt; None:
+        &#34;&#34;&#34;Create an icon button
+
+        Parameters
+        ----------
+        icon : Surface
+            the normal appearance of the button, clicking anywhere on the Surface will post a Button.CLICKED
+        active_icon : Surface, optional
+            Appearance of the button when clicked on (before MOUSEBUTTONUP fires), by default the same as icon
+        disabled_icon : [type], optional
+            Appearance of the button if it is in Button.DISABLED state, by default the same as icon
+        state : int, optional
+            Initial state of the button, by default Button.INACTIVE
+
+        Raises
+        ------
+        ValueError
+            [description]
+        &#34;&#34;&#34;
+        super().__init__(state)
+        if active_icon is None:
+            active_icon = icon
+        if disabled_icon is None:
+            disabled_icon = icon
+        self._icons = [icon, active_icon, disabled_icon]
+        if active_icon.get_rect() != icon.get_rect():
+            raise ValueError(
+                &#34;Both the icon and active_icon must have the same dimensions&#34;
+            )
+        self.rect = icon.get_rect()
+        self.image = self._icons[state]
+
+    def _set_state(self, state):
+        self.image = self._icons[state]
+        super()._set_state(state)
+
+    def redraw(self):
+        self.image = self._icons[self.state]</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.Button" href="abstracts.html#wipyg.abstracts.Button">Button</a></li>
+<li><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.abstracts.Button" href="abstracts.html#wipyg.abstracts.Button">Button</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.abstracts.Button.add_reaction" href="abstracts.html#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.del_reaction" href="abstracts.html#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.disable" href="abstracts.html#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.enable" href="abstracts.html#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.react" href="abstracts.html#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.redraw" href="abstracts.html#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.state" href="abstracts.html#wipyg.abstracts.Button.state">state</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="wipyg.Label"><code class="flex name class">
+<span>class <span class="ident">Label</span></span>
+<span>(</span><span>text='Hello', font=None, size=30, color=(0, 0, 0), bg_color=(255, 255, 255, 0))</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A simple label Widget to show some text</p>
+<p>Create a Label widget</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Text to display, by default "Hello"</dd>
+<dt><strong><code>font</code></strong> :&ensp;<code>file | filename</code>, optional</dt>
+<dd>Font to use, see <code>pygame.font</code>, by default None</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Font size in pixel, by default 30</dd>
+<dt><strong><code>color</code></strong> :&ensp;<code>color</code>, optional</dt>
+<dd>color of the text, by default black</dd>
+<dt><strong><code>bg_color</code></strong> :&ensp;<code>color</code>, optional</dt>
+<dd>background color, by default transparent</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Label(Widget):
+    &#34;&#34;&#34;A simple label Widget to show some text&#34;&#34;&#34;  # TODO #1 add newline support
+
+    def __init__(
+        self,
+        text=&#34;Hello&#34;,
+        font=None,
+        size=30,
+        color=(0, 0, 0),
+        bg_color=(255, 255, 255, 0),
+    ) -&gt; None:
+        &#34;&#34;&#34;Create a Label widget
+
+        Parameters
+        ----------
+        text : str, optional
+            Text to display, by default &#34;Hello&#34;
+        font : file | filename, optional
+            Font to use, see `pygame.font`, by default None
+        size : int, optional
+            Font size in pixel, by default 30
+        color : color, optional
+            color of the text, by default black
+        bg_color : color, optional
+            background color, by default transparent
+        &#34;&#34;&#34;
+        super().__init__()
+        self._font = Font(font, size)
+        self._text = text
+        self._text_color = color
+        self._bg_color = bg_color
+        self.rect = Rect(0, 0, 0, 0)
+        self.redraw()
+
+    def redraw(self):
+        bg_color = self._bg_color
+
+        pos = self.rect.topleft
+        self._text_img = self._font.render(self._text, True, self._text_color)
+
+        self._text_rect = self._text_img.get_rect()
+        padding = self._font.get_height()
+        self.rect = self._text_rect.inflate(padding, padding)
+        rect_center = (self.rect.w // 2, self.rect.h // 2)
+        self._text_rect.center = rect_center
+
+        self.image = Surface(self.rect.size, SRCALPHA)
+        self.image.fill(bg_color)
+        self.image.blit(self._text_img, self._text_rect)
+
+        # reposition the rect as initially
+        self.rect.topleft = pos</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.abstracts.Widget.add_reaction" href="abstracts.html#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.del_reaction" href="abstracts.html#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.disable" href="abstracts.html#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.enable" href="abstracts.html#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.react" href="abstracts.html#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.Widget.redraw" href="abstracts.html#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="wipyg.PlainButton"><code class="flex name class">
+<span>class <span class="ident">PlainButton</span></span>
+<span>(</span><span>text='Ok', font=None, size=30, state: int = 0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A normal button, light grey background when INACTIVE, almost white if ACTIVE, text greyed out if DISABLED</p>
+<p>Derive this class and override _colors to provide variations with different colors (in the three states)</p>
+<p>Create a plain button with grey background and black text</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The text displayed on the button, by default "Ok"</dd>
+<dt><strong><code>font</code></strong> :&ensp;<code>file | filename</code>, optional</dt>
+<dd>The source file for the font, by default None, that is the default Pygame sys font</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Font size (in pixels), by default 30</dd>
+<dt><strong><code>state</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Initial state of the button, one of (Button.ACTIVE, Button.INACTIVE, Button.DISABLED), by default Button.INACTIVE</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PlainButton(Button):
+    &#34;&#34;&#34;A normal button, light grey background when INACTIVE, almost white if ACTIVE, text greyed out if DISABLED
+
+    Derive this class and override _colors to provide variations with different colors (in the three states)
+    &#34;&#34;&#34;
+
+    def __init__(
+        self, text=&#34;Ok&#34;, font=None, size=30, state: int = Button.INACTIVE
+    ) -&gt; None:
+        &#34;&#34;&#34;Create a plain button with grey background and black text
+
+        Parameters
+        ----------
+        text : str, optional
+            The text displayed on the button, by default &#34;Ok&#34;
+        font : file | filename, optional
+            The source file for the font, by default None, that is the default Pygame sys font
+        size : int, optional
+            Font size (in pixels), by default 30
+        state : int, optional
+            Initial state of the button, one of (Button.ACTIVE, Button.INACTIVE, Button.DISABLED), by default Button.INACTIVE
+        &#34;&#34;&#34;
+        super().__init__(state)
+        self._font = Font(font, size)
+        self._text = text
+        self.rect = Rect(0, 0, 0, 0)
+        self.redraw()
+
+    def redraw(self):
+        bg_color, text_color = self._colors()
+
+        pos = self.rect.topleft
+        self._text_img = self._font.render(self._text, True, text_color)
+
+        self._text_rect = self._text_img.get_rect()
+        xsize, ysize = self._text_rect.size
+        padding = self._font.get_height()
+        self.rect = Rect(0, 0, xsize + 2 * padding, ysize + 2 * padding)
+        self._text_rect.center = self.rect.center
+
+        self.image = Surface(self.rect.size, SRCALPHA)
+        self.image.fill(bg_color)
+        rect(self.image, (0, 0, 0), self.rect, width=3)
+        self.image.blit(self._text_img, self._text_rect)
+
+        # reposition the rect as initially
+        self.rect.topleft = pos
+
+    def _colors(self):
+        if self.state == Button.INACTIVE:
+            bg_color = (210, 210, 210)
+            text_color = (0, 0, 0)
+        elif self.state == Button.ACTIVE:
+            bg_color = (250, 250, 250)
+            text_color = (0, 0, 0)
+        elif self.state == Button.DISABLED:
+            bg_color = (150, 150, 150)
+            text_color = (100, 100, 100)
+        return bg_color, text_color</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.Button" href="abstracts.html#wipyg.abstracts.Button">Button</a></li>
+<li><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="wipyg.buttons.CancelButton" href="buttons.html#wipyg.buttons.CancelButton">CancelButton</a></li>
+<li><a title="wipyg.buttons.SubmitButton" href="buttons.html#wipyg.buttons.SubmitButton">SubmitButton</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.abstracts.Button" href="abstracts.html#wipyg.abstracts.Button">Button</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.abstracts.Button.add_reaction" href="abstracts.html#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.del_reaction" href="abstracts.html#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.disable" href="abstracts.html#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.enable" href="abstracts.html#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.react" href="abstracts.html#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.redraw" href="abstracts.html#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+<li><code><a title="wipyg.abstracts.Button.state" href="abstracts.html#wipyg.abstracts.Button.state">state</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="wipyg.SubmitButton"><code class="flex name class">
+<span>class <span class="ident">SubmitButton</span></span>
+<span>(</span><span>text='Ok', font=None, size=30, state: int = 0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Button to submit or accept actions/things : green in INACTIVE, light green in ACTIVE, greyish green in DISABLED</p>
+<p>Create a plain button with grey background and black text</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The text displayed on the button, by default "Ok"</dd>
+<dt><strong><code>font</code></strong> :&ensp;<code>file | filename</code>, optional</dt>
+<dd>The source file for the font, by default None, that is the default Pygame sys font</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Font size (in pixels), by default 30</dd>
+<dt><strong><code>state</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Initial state of the button, one of (Button.ACTIVE, Button.INACTIVE, Button.DISABLED), by default Button.INACTIVE</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SubmitButton(PlainButton):
+    &#34;&#34;&#34;Button to submit or accept actions/things : green in INACTIVE, light green in ACTIVE, greyish green in DISABLED&#34;&#34;&#34;
+
+    def _colors(self):
+        if self.state == Button.INACTIVE:
+            bg_color = (0, 255, 0)
+            text_color = (255, 255, 255)
+        elif self.state == Button.ACTIVE:
+            bg_color = (117, 255, 117)
+            text_color = (0, 0, 0)
+        elif self.state == Button.DISABLED:
+            bg_color = (0, 110, 0)
+            text_color = (100, 100, 100)
+        return bg_color, text_color</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.buttons.PlainButton" href="buttons.html#wipyg.buttons.PlainButton">PlainButton</a></li>
+<li><a title="wipyg.abstracts.Button" href="abstracts.html#wipyg.abstracts.Button">Button</a></li>
+<li><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.buttons.PlainButton" href="buttons.html#wipyg.buttons.PlainButton">PlainButton</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.buttons.PlainButton.add_reaction" href="abstracts.html#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.buttons.PlainButton.del_reaction" href="abstracts.html#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.buttons.PlainButton.disable" href="abstracts.html#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.buttons.PlainButton.enable" href="abstracts.html#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.buttons.PlainButton.react" href="abstracts.html#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.buttons.PlainButton.redraw" href="abstracts.html#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+<li><code><a title="wipyg.buttons.PlainButton.state" href="abstracts.html#wipyg.abstracts.Button.state">state</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="wipyg.Window"><code class="flex name class">
+<span>class <span class="ident">Window</span></span>
+<span>(</span><span>window_content: <a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a>, bar_color=(110, 110, 110))</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A container with a window decoration</p>
+<p>The bar allows to close or minimize (roll up) or move the window as usual</p>
+<p>Create a window with a bar with the usual controls to close or minimize the window</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>window_content</code></strong> :&ensp;<code>Widget</code></dt>
+<dd>The content of the window, usually a Frame but may be a single Widget</dd>
+<dt><strong><code>bar_color</code></strong> :&ensp;<code>color</code>, optional</dt>
+<dd>The color of the window bar, by default (110, 110, 110)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Window(Container):
+    &#34;&#34;&#34;A container with a window decoration
+
+    The bar allows to close or minimize (roll up) or move the window as usual&#34;&#34;&#34;
+
+    def __init__(self, window_content: Widget, bar_color=(110, 110, 110)) -&gt; None:
+        &#34;&#34;&#34;Create a window with a bar with the usual controls to close or minimize the window
+
+        Parameters
+        ----------
+        window_content : Widget
+            The content of the window, usually a Frame but may be a single Widget
+        bar_color : color, optional
+            The color of the window bar, by default (110, 110, 110)
+        &#34;&#34;&#34;
+        super().__init__()
+        self._bar_color = bar_color
+        self._close = IconButton(CROSS)
+        self._minimize = IconButton(BAR)
+        self._content = window_content
+        self.add_widget(self._close)
+        self.add_widget(self._minimize)
+        self.add_widget(window_content)
+
+        self.rect = Rect(0, 0, 0, 0)
+
+        self._minimized = False
+        self._close.add_reaction(Button.CLICKED, self._close_window)
+        self._minimize.add_reaction(Button.CLICKED, self._min_window)
+        self.add_reaction(MOUSEBUTTONDOWN, self._grabbing)
+        self.add_reaction(MOUSEBUTTONUP, self._ungrabbing)
+        self._grabbed = False
+
+        self.redraw()
+
+    def redraw(self):
+        if self._minimized:
+            self.rect.height = 20
+        else:
+            self._content.rect.topleft = self.rect.move(0, 20).topleft
+            self._content.redraw()
+            content_img = self._content.image
+            content_rect = content_img.get_rect(y=20)
+
+            self.rect.size = content_rect.size
+            self.rect.height += 20
+
+        self.image = Surface(self.rect.size, SRCALPHA)
+
+        if not self._minimized:
+            self.image.blit(content_img, content_rect)
+
+        rect(self.image, self._bar_color, Rect(0, 0, self.rect.width, 20))
+
+        self._close.rect.topright = self.rect.topright
+        self._minimize.rect.topright = self.rect.move(-20, 0).topright
+        self._close.redraw()
+        self._minimize.redraw()
+        self.image.blit(self._close.image, Rect(self.rect.width - 20, 0, 20, 20))
+        self.image.blit(self._minimize.image, Rect(self.rect.width - 40, 0, 20, 20))
+
+    def _close_window(self, source, e):
+        if e.button == self._close:
+            self.kill()
+
+    def _min_window(self, source, e):
+        if e.button == self._minimize:
+            self._minimized = not self._minimized
+            if self._minimized:
+                self._content.disable()
+            else:
+                self._content.enable()
+            self.redraw()
+
+    def _grabbing(self, source, e):
+        bar = self.rect.copy()
+        bar.height = 20
+        bar.width -= 40
+        if bar.collidepoint(e.pos):
+            self._grabbed = self.add_reaction(MOUSEMOTION, self._move_window)
+
+    def _ungrabbing(self, source, e):
+        if self._grabbed:
+            self.del_reaction(self._grabbed)
+            self._grabbed = False
+
+    def _move_window(self, source, e):
+        self.rect.move_ip(e.rel)
+        self.redraw()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="wipyg.abstracts.Container" href="abstracts.html#wipyg.abstracts.Container">Container</a></li>
+<li><a title="wipyg.abstracts.Widget" href="abstracts.html#wipyg.abstracts.Widget">Widget</a></li>
+<li>pygame.sprite.Sprite</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="wipyg.abstracts.Container" href="abstracts.html#wipyg.abstracts.Container">Container</a></b></code>:
+<ul class="hlist">
+<li><code><a title="wipyg.abstracts.Container.add_reaction" href="abstracts.html#wipyg.abstracts.Widget.add_reaction">add_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.add_widget" href="abstracts.html#wipyg.abstracts.Container.add_widget">add_widget</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.del_reaction" href="abstracts.html#wipyg.abstracts.Widget.del_reaction">del_reaction</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.del_widget" href="abstracts.html#wipyg.abstracts.Container.del_widget">del_widget</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.disable" href="abstracts.html#wipyg.abstracts.Widget.disable">disable</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.enable" href="abstracts.html#wipyg.abstracts.Widget.enable">enable</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.kill" href="abstracts.html#wipyg.abstracts.Container.kill">kill</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.react" href="abstracts.html#wipyg.abstracts.Widget.react">react</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.redraw" href="abstracts.html#wipyg.abstracts.Widget.redraw">redraw</a></code></li>
+<li><code><a title="wipyg.abstracts.Container.update" href="abstracts.html#wipyg.abstracts.Container.update">update</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
 </section>
 </article>
 <nav id="sidebar">
@@ -84,6 +1152,47 @@ __all__ = [&#34;abstracts&#34;, &#34;containers&#34;, &#34;buttons&#34;, &#34;en
 <li><code><a title="wipyg.containers" href="containers.html">wipyg.containers</a></code></li>
 <li><code><a title="wipyg.entry" href="entry.html">wipyg.entry</a></code></li>
 <li><code><a title="wipyg.label" href="label.html">wipyg.label</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="wipyg.CancelButton" href="#wipyg.CancelButton">CancelButton</a></code></h4>
+</li>
+<li>
+<h4><code><a title="wipyg.Entry" href="#wipyg.Entry">Entry</a></code></h4>
+<ul class="two-column">
+<li><code><a title="wipyg.Entry.DESELECTED" href="#wipyg.Entry.DESELECTED">DESELECTED</a></code></li>
+<li><code><a title="wipyg.Entry.DISABLED" href="#wipyg.Entry.DISABLED">DISABLED</a></code></li>
+<li><code><a title="wipyg.Entry.SELECTED" href="#wipyg.Entry.SELECTED">SELECTED</a></code></li>
+<li><code><a title="wipyg.Entry.SUBMIT" href="#wipyg.Entry.SUBMIT">SUBMIT</a></code></li>
+<li><code><a title="wipyg.Entry.cursor" href="#wipyg.Entry.cursor">cursor</a></code></li>
+<li><code><a title="wipyg.Entry.state" href="#wipyg.Entry.state">state</a></code></li>
+<li><code><a title="wipyg.Entry.update" href="#wipyg.Entry.update">update</a></code></li>
+<li><code><a title="wipyg.Entry.value" href="#wipyg.Entry.value">value</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="wipyg.Frame" href="#wipyg.Frame">Frame</a></code></h4>
+<ul class="">
+<li><code><a title="wipyg.Frame.bg_color" href="#wipyg.Frame.bg_color">bg_color</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="wipyg.IconButton" href="#wipyg.IconButton">IconButton</a></code></h4>
+</li>
+<li>
+<h4><code><a title="wipyg.Label" href="#wipyg.Label">Label</a></code></h4>
+</li>
+<li>
+<h4><code><a title="wipyg.PlainButton" href="#wipyg.PlainButton">PlainButton</a></code></h4>
+</li>
+<li>
+<h4><code><a title="wipyg.SubmitButton" href="#wipyg.SubmitButton">SubmitButton</a></code></h4>
+</li>
+<li>
+<h4><code><a title="wipyg.Window" href="#wipyg.Window">Window</a></code></h4>
+</li>
 </ul>
 </li>
 </ul>

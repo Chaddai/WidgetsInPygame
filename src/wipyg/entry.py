@@ -12,6 +12,9 @@ import unicodedata
 class Entry(Widget):
     """A text entry Widget
 
+    React to typing from the user if the state is `SELECTED`. Click on the
+    entry to select it and position the blinking cursor.
+
     Attributes
     ----------
     value : str
@@ -23,9 +26,8 @@ class Entry(Widget):
 
     Custom event
     -------------
-    Entry.SUBMIT
-        launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
-        contains a "value" attribute of type str
+        Entry.SUBMIT : launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
+        contains a "value" attribute of type str and the "entry" it comes from
     """
 
     # Class constants
@@ -133,7 +135,7 @@ class Entry(Widget):
                 self._cursor = 0
             elif e.key == K_KP_ENTER or e.key == K_RETURN:
                 self.state = Entry.DESELECTED
-                post(Event(Entry.SUBMIT, dict={"value": self.value}))
+                post(Event(Entry.SUBMIT, {"value": self.value, "entry": self}))
             elif (
                 letter != ""
                 # don't react to Control characters

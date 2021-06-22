@@ -21,7 +21,7 @@ pygame.init()
 
 screen = pygame.display.set_mode((640, 480))
 screen_rect = screen.get_rect()
-pygame.display.set_caption("Demo of wipyg Widgets")
+pygame.display.set_caption("Demo of wipyg Window")
 
 but_quit = buttons.CancelButton(text="Quitter")
 but_quit.add_reaction(Button.CLICKED, quit)

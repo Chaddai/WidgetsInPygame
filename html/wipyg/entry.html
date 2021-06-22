@@ -41,6 +41,9 @@ import unicodedata
 class Entry(Widget):
     &#34;&#34;&#34;A text entry Widget
 
+    React to typing from the user if the state is `SELECTED`. Click on the
+    entry to select it and position the blinking cursor.
+
     Attributes
     ----------
     value : str
@@ -52,9 +55,8 @@ class Entry(Widget):
 
     Custom event
     -------------
-    Entry.SUBMIT
-        launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
-        contains a &#34;value&#34; attribute of type str
+        Entry.SUBMIT : launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
+        contains a &#34;value&#34; attribute of type str and the &#34;entry&#34; it comes from
     &#34;&#34;&#34;
 
     # Class constants
@@ -162,7 +164,7 @@ class Entry(Widget):
                 self._cursor = 0
             elif e.key == K_KP_ENTER or e.key == K_RETURN:
                 self.state = Entry.DESELECTED
-                post(Event(Entry.SUBMIT, dict={&#34;value&#34;: self.value}))
+                post(Event(Entry.SUBMIT, {&#34;value&#34;: self.value, &#34;entry&#34;: self}))
             elif (
                 letter != &#34;&#34;
                 # don&#39;t react to Control characters
@@ -256,6 +258,8 @@ class Entry(Widget):
 </code></dt>
 <dd>
 <div class="desc"><p>A text entry Widget</p>
+<p>React to typing from the user if the state is <code>SELECTED</code>. Click on the
+entry to select it and position the blinking cursor.</p>
 <h2 id="attributes">Attributes</h2>
 <dl>
 <dt><strong><code>value</code></strong> :&ensp;<code>str</code></dt>
@@ -266,9 +270,9 @@ class Entry(Widget):
 <dd>state of the Entry, one of (Entry.SELECTED, Entry.DESELECTED, Entry.DISABLED)</dd>
 </dl>
 <h2 id="custom-event">Custom Event</h2>
-<p>Entry.SUBMIT
-launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
-contains a "value" attribute of type str</p>
+<pre><code>Entry.SUBMIT : launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
+contains a "value" attribute of type str and the "entry" it comes from
+</code></pre>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>value</code></strong> :&ensp;<code>str</code></dt>
@@ -294,6 +298,9 @@ contains a "value" attribute of type str</p>
 <pre><code class="python">class Entry(Widget):
     &#34;&#34;&#34;A text entry Widget
 
+    React to typing from the user if the state is `SELECTED`. Click on the
+    entry to select it and position the blinking cursor.
+
     Attributes
     ----------
     value : str
@@ -305,9 +312,8 @@ contains a "value" attribute of type str</p>
 
     Custom event
     -------------
-    Entry.SUBMIT
-        launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
-        contains a &#34;value&#34; attribute of type str
+        Entry.SUBMIT : launched if the user press K_RETURN or K_KP_ENTER while the Entry is selected
+        contains a &#34;value&#34; attribute of type str and the &#34;entry&#34; it comes from
     &#34;&#34;&#34;
 
     # Class constants
@@ -415,7 +421,7 @@ contains a "value" attribute of type str</p>
                 self._cursor = 0
             elif e.key == K_KP_ENTER or e.key == K_RETURN:
                 self.state = Entry.DESELECTED
-                post(Event(Entry.SUBMIT, dict={&#34;value&#34;: self.value}))
+                post(Event(Entry.SUBMIT, {&#34;value&#34;: self.value, &#34;entry&#34;: self}))
             elif (
                 letter != &#34;&#34;
                 # don&#39;t react to Control characters

@@ -257,7 +257,7 @@ class GridContainer(Container, ABC):
             self.columns = col
         if line > self._lines:
             self.lines = line
-        self._grid[line][col] = w
+        self._grid[line - 1][col - 1] = w
         self.add_widget(w)
 
         self._refresh_dims()
@@ -280,7 +280,7 @@ class GridContainer(Container, ABC):
         if col > self._columns or line > self._lines:
             return
         else:
-            return self._grid[line][col]
+            return self._grid[line - 1][col - 1]
 
     def del_cell(self, col: int, line: int) -> Widget:
         """Remove the Widget in the given position from the grid and from the container
@@ -299,8 +299,8 @@ class GridContainer(Container, ABC):
         if col > self._columns or line > self._lines:
             return
         else:
-            w = self._grid[line][col]
-            self._grid[line][col] = None
+            w = self._grid[line - 1][col - 1]
+            self._grid[line - 1][col - 1] = None
             self.del_widget(w)
 
         self._refresh_dims()
